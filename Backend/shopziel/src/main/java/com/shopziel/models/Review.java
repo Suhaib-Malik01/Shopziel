@@ -3,6 +3,9 @@ package com.shopziel.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CollectionTable;
+import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -27,7 +30,10 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private String reviewId;
-
+    
+    @ElementCollection
+    @CollectionTable(name="review_images", joinColumns=@JoinColumn(name="reviewId"))
+    @Column(name="review_image_url")
     private List<String> reviewImagesUrls = new ArrayList<String>();
     private String review;
 

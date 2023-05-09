@@ -34,7 +34,6 @@ public class Product {
     private Double price;
 
     private Double rating = 0.00;
-    
   
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category_id")

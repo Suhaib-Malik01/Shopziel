@@ -24,11 +24,16 @@ public class Customer {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer customerId;
+
     private String firstName;
+
     private String lastName;
+    
     private String profilePictureUrl;
+
     @Column(unique = true, nullable = false)
     private String email;
+
     @Column(name = "password_hash", nullable = false)
     private String password;
 
