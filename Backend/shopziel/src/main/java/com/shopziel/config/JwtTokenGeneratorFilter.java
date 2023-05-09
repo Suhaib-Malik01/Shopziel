@@ -23,7 +23,6 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
-		
 
 		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 		if (authentication != null) {
@@ -31,19 +30,17 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 			SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
 			String jwt = Jwts.builder()
-							.setIssuer("shopziel")
-							.setSubject("JWT Token")
-							.claim("username", authentication.getName())
-							.claim("role", getRole(authentication.getAuthorities()))
-							.setIssuedAt(new Date())
-							.setExpiration(new Date(new Date().getTime() + 30000000))
-							.signWith(key).compact();
+					.setIssuer("shopziel")
+					.setSubject("JWT Token")
+					.claim("username", authentication.getName())
+					.claim("role", getRole(authentication.getAuthorities()))
+					.setIssuedAt(new Date())
+					.setExpiration(new Date(new Date().getTime() + 30000000))
+					.signWith(key).compact();
 
 			response.setHeader(SecurityConstants.JWT_HEADER, jwt);
-			
 
 		}
-		
 
 		filterChain.doFilter(request, response);
 
@@ -60,13 +57,15 @@ public class JwtTokenGeneratorFilter extends OncePerRequestFilter {
 		return role;
 	}
 
-//this make sure that this filter will execute only for first time when client call the api /login at first time
+	// this make sure that this filter will execute only for first time when client
+	// call the api /login at first time
 	@Override
 	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
-		return  !(request.getServletPath().equals("/api/customers/signIn")
-				 || request.getServletPath().equals("/api/sellers/signIn")
-				 || request.getServletPath().equals("/api/admins/signIn"));
-				
+
+		return !(request.getServletPath().equals("/api/customers/signIn")
+				|| request.getServletPath().equals("/api/sellers/signIn")
+				|| request.getServletPath().equals("/api/admins/signIn"));
+
 	}
 
 }

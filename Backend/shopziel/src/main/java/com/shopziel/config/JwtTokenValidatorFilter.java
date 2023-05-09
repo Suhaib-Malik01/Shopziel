@@ -24,57 +24,57 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class JwtTokenValidatorFilter extends OncePerRequestFilter {
 
-    @Override
-    protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
-            throws ServletException, IOException {
+	@Override
+	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
+			throws ServletException, IOException {
 
-        String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
+		String jwt = request.getHeader(SecurityConstants.JWT_HEADER);
 
-        if (jwt != null) {
+		if (jwt != null) {
 
-            try {
+			try {
 
-                // extracting the word Bearer
-                jwt = jwt.substring(7);
+				// extracting the word Bearer
+				jwt = jwt.substring(7);
 
-                SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
+				SecretKey key = Keys.hmacShaKeyFor(SecurityConstants.JWT_KEY.getBytes());
 
-                Claims claims = Jwts.parserBuilder()
-                        .setSigningKey(key)
-                        .build()
-                        .parseClaimsJws(jwt)
-                        .getBody();
+				Claims claims = Jwts.parserBuilder()
+						.setSigningKey(key)
+						.build()
+						.parseClaimsJws(jwt)
+						.getBody();
 
-                String username = String.valueOf(claims.get("username"));
+				String username = String.valueOf(claims.get("username"));
 
-                String role = String.valueOf(claims.get("role"));
+				String role = String.valueOf(claims.get("role"));
 
-                List<GrantedAuthority> authorities = new ArrayList<>();
-                authorities.add(new SimpleGrantedAuthority(role));
+				List<GrantedAuthority> authorities = new ArrayList<>();
+				authorities.add(new SimpleGrantedAuthority(role));
 
-                Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
+				Authentication auth = new UsernamePasswordAuthenticationToken(username, null, authorities);
 
-                SecurityContextHolder.getContext().setAuthentication(auth);
+				SecurityContextHolder.getContext().setAuthentication(auth);
 
-            } catch (Exception e) {
-                throw new BadCredentialsException("Invalid Token received..");
-            }
+			} catch (Exception e) {
+				throw new BadCredentialsException("Invalid Token received..");
+			}
 
-        }
+		}
 
-        filterChain.doFilter(request, response);
+		filterChain.doFilter(request, response);
 
-    }
+	}
 
-    // this time this validation filter has to be executed for all the apis except
-    // the /login api
+	// this time this validation filter has to be executed for all the apis except
+	// the /login api
 
-    @Override
-    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
+	@Override
+	protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException {
 
-        return (request.getServletPath().equals("/api/customers/signIn")
-                || request.getServletPath().equals("/api/sellers/signIn")
-                || request.getServletPath().equals("/api/admins/signIn"));
-    }
+		return (request.getServletPath().equals("/api/customers/signIn")
+				|| request.getServletPath().equals("/api/sellers/signIn")
+				|| request.getServletPath().equals("/api/admins/signIn"));
+	}
 
 }
