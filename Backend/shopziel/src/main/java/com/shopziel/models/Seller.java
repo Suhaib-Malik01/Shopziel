@@ -30,9 +30,14 @@ public class Seller {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer sellerId;
+
     private String name;
+
     @Column(unique = true, nullable = false)
     private String email;
+
+    private String password;
+
     private String phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
