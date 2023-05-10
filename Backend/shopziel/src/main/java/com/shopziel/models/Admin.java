@@ -10,16 +10,7 @@ import lombok.Data;
 @Entity
 @Data
 @AllArgsConstructor
-public class Admin {
+public class Admin extends AppUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
-
-    private String name;
-
-    private String email;
-
-    private String password;
     
 }

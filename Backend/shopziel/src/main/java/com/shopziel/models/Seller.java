@@ -25,20 +25,18 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Seller {
+public class Seller extends AppUser {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer sellerId;
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // private Integer sellerId;
 
-    private String name;
+    
+    // private String email;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    // private String password;
 
-    private String password;
-
-    private String phoneNumber;
+    // private String phoneNumber;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")

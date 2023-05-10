@@ -1,7 +1,9 @@
 package com.shopziel;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.Bean;
 
 import io.swagger.v3.oas.annotations.OpenAPIDefinition;
 import io.swagger.v3.oas.annotations.enums.SecuritySchemeType;
@@ -23,5 +25,10 @@ public class ShopzielApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(ShopzielApplication.class, args);
 	}
+
+	@Bean
+    public ModelMapper modelMapper() {
+        return new ModelMapper();
+    }
 
 }
