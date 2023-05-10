@@ -35,7 +35,6 @@ public class MyUserDetailsService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		System.out.println("just entered MyUserDeailsService classe's loadByUsername method" );
 
 		Optional<Customer> existingCustomer = customerRepository.findByEmail(username);
 

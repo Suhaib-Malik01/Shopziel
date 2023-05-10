@@ -20,22 +20,22 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class Customer {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer customerId;
+public class Customer extends AppUser {
+    // @Id
+    // @GeneratedValue(strategy = GenerationType.AUTO)
+    // private Integer customerId;
 
-    private String firstName;
+    // private String firstName;
 
-    private String lastName;
+    // private String lastName;
     
-    private String profilePictureUrl;
+    // private String profilePictureUrl;
 
-    @Column(unique = true, nullable = false)
-    private String email;
+    // @Column(unique = true, nullable = false)
+    // private String email;
 
-    @Column(name = "password_hash", nullable = false)
-    private String password;
+    // @Column(name = "password_hash", nullable = false)
+    // private String password;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "address_id")

@@ -20,11 +20,18 @@ public class Address {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer addressId;
+
     private String address;
+
     private String street;
+
     private String city;
+
     private String state;
+
     private String country;
+
     private Integer postalCode;
+    
     private AddressType addressType;
 }
