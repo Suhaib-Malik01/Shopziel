@@ -29,6 +29,12 @@ public class SellerServiceImpl implements SellerService {
     
         return sellerDto;
     }
+
+	@Override
+	public SellerDto findByEmail(String name) {
+		Seller seller = sellerRepository.findByEmail(name).get();
+		return this.modelMapper.map(seller, SellerDto.class);
+	}
     
     
 }
