@@ -22,6 +22,7 @@ public class SellerController {
     @Autowired
     private SellerService sellerService;
     
+    
     @PostMapping("/")
     public ResponseEntity<SellerDto> registerSeller(@RequestBody SellerDto sellerDto){
         
@@ -37,7 +38,9 @@ public class SellerController {
 		// parameter
 		// System.out.println(response.getHeaders(SecurityConstants.JWT_HEADER));
 		System.out.println("signIn");
+
 		return new ResponseEntity<>(sellerDto, HttpStatus.ACCEPTED);
+
 
 	}
 }
