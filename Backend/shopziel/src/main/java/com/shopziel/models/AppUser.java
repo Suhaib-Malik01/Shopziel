@@ -2,6 +2,8 @@ package com.shopziel.models;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -28,13 +30,13 @@ public class AppUser {
 
     private String profileImgUrl;
 
-
     @Column(unique = true, nullable = false)
     private String email;
 
     @Column(name = "password_hash", nullable = false)
     private String password;
 
-    private String role;
+    @Enumerated(EnumType.STRING)
+    private Role role;
     
 }

@@ -15,7 +15,7 @@ import io.swagger.v3.oas.annotations.servers.Server;
 
 @SpringBootApplication
 
-@OpenAPIDefinition(info = @Info(title = "EaseAmuse API", version = "1.1"), security = {
+@OpenAPIDefinition(info = @Info(title = "ShopZiel E-Commerce API", version = "1.1"), security = {
 		@SecurityRequirement(name = "basicAuth"), @SecurityRequirement(name = "bearerToken") }, servers = {
 				@Server(url = "/", description = "Default Server URL") })
 @SecuritySchemes({ @SecurityScheme(name = "basicAuth", type = SecuritySchemeType.HTTP, scheme = "basic"),

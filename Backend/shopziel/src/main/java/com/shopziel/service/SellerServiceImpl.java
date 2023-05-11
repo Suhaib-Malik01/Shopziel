@@ -2,10 +2,12 @@ package com.shopziel.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.SellerDto;
+import com.shopziel.dto.UserDto;
 import com.shopziel.models.AppUser;
 import com.shopziel.models.Seller;
 import com.shopziel.repository.AppUserRepository;
@@ -14,40 +16,31 @@ import com.shopziel.repository.SellerRepository;
 @Service
 public class SellerServiceImpl implements SellerService {
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @Autowired
-    private SellerRepository sellerRepository;
-    
-    @Autowired
-    private AppUserRepository appUserRepository;
+	@Autowired
+	private AppUserRepository appUserRepository;
 
-    @Autowired
-    private PasswordEncoder encoder;
-    
-    @Override
-    public SellerDto registerSeller(SellerDto sellerDto) {
-        
-        Seller seller = modelMapper.map(sellerDto, Seller.class);
-        AppUser appUser = this.modelMapper.map(seller, AppUser.class);
-        
-        appUser.setPassword(encoder.encode(appUser.getPassword()));
-        
-        appUser = appUserRepository.save(appUser);
-       
-        sellerDto.setId(appUser.getId());
-            
-        return sellerDto;
-    }
+	@Autowired
+	private SellerRepository sellerRepository;
 
 	@Override
-	public SellerDto findByEmail(String name) {
-		Seller seller = sellerRepository.findByEmail(name).get();
+	public SellerDto registerSeller(SellerDto sellerDto) {
+
+		Seller seller = modelMapper.map(sellerDto, Seller.class);
+		AppUser appUser = this.modelMapper.map(seller, AppUser.class);
+
+		appUser = appUserRepository.save(appUser);
+
+		return (SellerDto) this.modelMapper.map(appUser, UserDto.class);
+	}
+
+	@Override
+	public SellerDto findByEmail(String email) {
+		Seller seller = sellerRepository.findByEmail(email)
+				.orElseThrow(() -> new UsernameNotFoundException(email + " is not registered!!"));
 		return this.modelMapper.map(seller, SellerDto.class);
 	}
-    
-    
-    
-    
+
 }
