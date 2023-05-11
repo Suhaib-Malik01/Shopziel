@@ -13,14 +13,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.shopziel.models.Admin;
 import com.shopziel.models.AppUser;
-import com.shopziel.models.Customer;
-import com.shopziel.models.Seller;
-import com.shopziel.repository.AdminRepository;
 import com.shopziel.repository.AppUserRepository;
-import com.shopziel.repository.CustomerRepository;
-import com.shopziel.repository.SellerRepository;
 
 @Service
 public class MyUserDetailsService implements UserDetailsService {

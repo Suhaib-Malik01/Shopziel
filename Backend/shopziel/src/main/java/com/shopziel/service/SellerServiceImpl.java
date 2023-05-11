@@ -2,6 +2,7 @@ package com.shopziel.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.SellerDto;
@@ -22,18 +23,29 @@ public class SellerServiceImpl implements SellerService {
     @Autowired
     private AppUserRepository appUserRepository;
 
+    @Autowired
+    private PasswordEncoder encoder;
+    
     @Override
     public SellerDto registerSeller(SellerDto sellerDto) {
         
         Seller seller = modelMapper.map(sellerDto, Seller.class);
         AppUser appUser = this.modelMapper.map(seller, AppUser.class);
-
+        
+        appUser.setPassword(encoder.encode(appUser.getPassword()));
+        
         appUser = appUserRepository.save(appUser);
        
         sellerDto.setId(appUser.getId());
             
         return sellerDto;
     }
+
+	@Override
+	public SellerDto findByEmail(String name) {
+		Seller seller = sellerRepository.findByEmail(name).get();
+		return this.modelMapper.map(seller, SellerDto.class);
+	}
     
     
     
