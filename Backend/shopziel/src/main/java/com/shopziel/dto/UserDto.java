@@ -1,8 +1,17 @@
 package com.shopziel.dto;
 
-import lombok.Data;
+import com.shopziel.models.Role;
 
-@Data
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 public class UserDto {
 
     private Integer id;
@@ -17,5 +26,5 @@ public class UserDto {
 
     private String password;
     
-    private String role;
+    private Role role;
 }

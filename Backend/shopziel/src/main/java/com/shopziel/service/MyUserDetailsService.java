@@ -32,7 +32,7 @@ public class MyUserDetailsService implements UserDetailsService {
 			AppUser appUser = existingappUser.get();
 			List<GrantedAuthority> authorities = new ArrayList<>();
 
-			SimpleGrantedAuthority sga = new SimpleGrantedAuthority(appUser.getRole());
+			SimpleGrantedAuthority sga = new SimpleGrantedAuthority(appUser.getRole().toString());
 			authorities.add(sga);
 
 			User user = new User(appUser.getEmail(), appUser.getPassword(), authorities);

@@ -26,7 +26,7 @@ public class AppConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().csrf().disable()
                 .authorizeHttpRequests()
-                .requestMatchers(HttpMethod.POST, "/api/sellers/", "/api/admins/", "/api/customers/").permitAll()
+                .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)

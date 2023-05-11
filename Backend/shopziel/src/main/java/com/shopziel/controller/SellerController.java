@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopziel.dto.SellerDto;
+import com.shopziel.dto.UserDto;
 import com.shopziel.service.SellerService;
 
 @RestController
@@ -23,24 +24,5 @@ public class SellerController {
     private SellerService sellerService;
     
     
-    @PostMapping("/")
-    public ResponseEntity<SellerDto> registerSeller(@RequestBody SellerDto sellerDto){
-        
-        return new ResponseEntity<SellerDto>(sellerService.registerSeller(sellerDto), HttpStatus.OK);
-    }
-    
-    @GetMapping("/signIn")
-	public ResponseEntity<SellerDto> getLoggedInCustomerDetailsHandler(Authentication auth) {
-
-    	SellerDto sellerDto = sellerService.findByEmail(auth.getName());
-
-		// to get the token in body, pass HttpServletResponse inside this method
-		// parameter
-		// System.out.println(response.getHeaders(SecurityConstants.JWT_HEADER));
-		System.out.println("signIn");
-
-		return new ResponseEntity<>(sellerDto, HttpStatus.ACCEPTED);
-
-
-	}
+   
 }
