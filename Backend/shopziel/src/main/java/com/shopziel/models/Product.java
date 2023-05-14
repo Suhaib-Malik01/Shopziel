@@ -28,9 +28,13 @@ public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer productId;
+
     private String image;
+
     private String name;
+
     private String description;
+    
     private Double price;
 
     private Double rating = 0.00;

@@ -1,32 +1,51 @@
 package com.shopziel.controller;
 
+import org.apache.catalina.connector.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shopziel.dto.SellerDto;
-import com.shopziel.service.SellerService;
-
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import com.shopziel.dto.ProductDto;
+import com.shopziel.exception.ProductException;
+import com.shopziel.exception.SellerException;
+import com.shopziel.service.ProductService;
 
 @RestController
 @RequestMapping("/api/sellers")
 @CrossOrigin(origins = "*")
 public class SellerController {
 
-    // @Autowired
-    // private SellerService sellerService;
-    
+    @Autowired
+    private ProductService productService;
 
-    // @PostMapping("/")
-    // private ResponseEntity<SellerDto> registerSeller(@RequestBody SellerDto sellerDto){
+    @PostMapping("/products")
+    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) throws SellerException {
 
-    //     return new ResponseEntity<SellerDto>(sellerService.registerSeller(sellerDto), HttpStatus.OK);
-    // }
-    
-   
+        return new ResponseEntity<ProductDto>(productService.addProduct(productDto), HttpStatus.OK);
+    }
+
+    @PutMapping("/products")
+    public ResponseEntity<ProductDto> updateProduct(@RequestBody ProductDto productDto) throws ProductException, SellerException {
+
+        return new ResponseEntity<ProductDto>(productService.updateProduct(productDto), HttpStatus.ACCEPTED);
+    }
+
+    @DeleteMapping("/products/{id}")
+    public ResponseEntity<ProductDto> deleteProduct(@PathVariable Integer id) throws ProductException, SellerException{
+
+        System.out.println("hello");
+
+        return new ResponseEntity<ProductDto>(productService.deleteProduct(id), HttpStatus.OK);
+    }
+
 }
