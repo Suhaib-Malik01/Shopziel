@@ -3,6 +3,7 @@ package com.shopziel.dto;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.shopziel.models.Category;
 
 import lombok.AllArgsConstructor;
@@ -30,6 +31,7 @@ public class ProductDto {
 
 	private Category category;
 
+	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
 	private SellerDto seller;
 
 	private List<ReviewDto> reviews = new ArrayList<>();
