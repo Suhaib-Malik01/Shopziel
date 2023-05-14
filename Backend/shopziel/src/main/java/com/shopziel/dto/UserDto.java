@@ -3,7 +3,6 @@ package com.shopziel.dto;
 import com.shopziel.models.Role;
 
 import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -22,6 +21,7 @@ public class UserDto {
 
     private String profileImgUrl;
 
+    
     private String email;
 
     private String password;

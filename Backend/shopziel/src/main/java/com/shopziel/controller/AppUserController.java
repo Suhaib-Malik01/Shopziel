@@ -38,10 +38,11 @@ public class AppUserController {
 
 		UserDto userDto = appUserService.findByEmail(auth.getName());
 
+		System.out.println(userDto.toString());
+
 		// to get the token in body, pass HttpServletResponse inside this method
 		// parameter
 		// System.out.println(response.getHeaders(SecurityConstants.JWT_HEADER));
-		System.out.println("signIn");
 
 		return new ResponseEntity<>(userDto, HttpStatus.ACCEPTED);
 
