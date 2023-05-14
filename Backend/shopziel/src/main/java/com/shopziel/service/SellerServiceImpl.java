@@ -33,7 +33,7 @@ public class SellerServiceImpl implements SellerService {
 
 		appUser = appUserRepository.save(appUser);
 
-		return (SellerDto) this.modelMapper.map(appUser, UserDto.class);
+		return this.modelMapper.map(appUser, SellerDto.class);
 	}
 
 	@Override

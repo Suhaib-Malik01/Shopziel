@@ -26,8 +26,9 @@ public class MyUserDetailsService implements UserDetailsService {
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
 		Optional<AppUser> existingappUser = appUserRepository.findByEmail(username);
-
+		
 		if (existingappUser.isPresent()) {
+
 
 			AppUser appUser = existingappUser.get();
 			List<GrantedAuthority> authorities = new ArrayList<>();
