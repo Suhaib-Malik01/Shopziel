@@ -56,12 +56,12 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto updateProduct(ProductDto productDto) throws ProductException, SellerException {
 
-        String  userEmail;
+        String userEmail;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if(auth!=null){
+        if (auth != null) {
             userEmail = auth.getPrincipal().toString();
-        }else{
+        } else {
             throw new SellerException("Login Expired...");
         }
 
@@ -71,9 +71,8 @@ public class ProductServiceImpl implements ProductService {
         Product product = productRepository.findById(productDto.getProductId())
                 .orElseThrow(() -> new ProductException("Product not found with ID: " + productDto.getProductId()));
 
-
-        if(product.getSeller().getId()!=seller.getId()) throw new SellerException("You are not authorized to perform this operation.");
-
+        if (product.getSeller().getId() != seller.getId())
+            throw new SellerException("You are not authorized to perform this operation.");
 
         product = productRepository.save(modelMapper.map(productDto, Product.class));
 
@@ -93,27 +92,36 @@ public class ProductServiceImpl implements ProductService {
     @Override
     public ProductDto deleteProduct(int id) throws ProductException, SellerException {
 
-        String  userEmail;
+        String userEmail;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 
-        if(auth!=null){
+        if (auth != null) {
             userEmail = auth.getPrincipal().toString();
-        }else{
+        } else {
             throw new SellerException("Login Expired...");
         }
 
         Seller seller = sellerRepository.findByEmail(userEmail)
                 .orElseThrow(() -> new SellerException("Seller Not Found..."));
 
-    
-        Product product = productRepository.findById(id).orElseThrow(() -> new ProductException("Product not found with ID: "+ id ));
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductException("Product not found with ID: " + id));
 
-        if(product.getSeller().getId()!=seller.getId()) throw new SellerException("You are not authorized to perform this operation.");
+        if (product.getSeller().getId() != seller.getId())
+            throw new SellerException("You are not authorized to perform this operation.");
 
         productRepository.delete(product);
 
         return modelMapper.map(product, ProductDto.class);
 
+    }
+
+    public ProductDto getProduct(Integer id) throws ProductException {
+
+        Product product = productRepository.findById(id)
+                .orElseThrow(() -> new ProductException("Product not found with ID: " + id));
+
+        return modelMapper.map(product, ProductDto.class);
     }
 
 }
