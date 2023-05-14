@@ -31,7 +31,7 @@ public class ProductDto {
 
 	private Category category;
 
-	@JsonProperty(access = JsonProperty.Access.READ_ONLY)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private SellerDto seller;
 
 	private List<ReviewDto> reviews = new ArrayList<>();
