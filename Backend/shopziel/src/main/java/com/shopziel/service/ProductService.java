@@ -15,4 +15,6 @@ public interface ProductService {
     public List<ProductDto> getAllProducts() throws ProductException;
 
     public ProductDto deleteProduct(int id) throws ProductException, SellerException;
+
+    public ProductDto getProduct(Integer id) throws ProductException;
 }

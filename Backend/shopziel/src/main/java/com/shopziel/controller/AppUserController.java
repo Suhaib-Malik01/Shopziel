@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.shopziel.dto.AdminDto;
-import com.shopziel.dto.CustomerDto;
-import com.shopziel.dto.SellerDto;
 import com.shopziel.dto.UserDto;
 import com.shopziel.service.AppUserService;
 
