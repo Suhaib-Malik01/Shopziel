@@ -87,9 +87,14 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto deleteReview(Integer id, Integer reviewId) {
+    public ReviewDto deleteReview(Integer reviewId) throws ReviewException {
         // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'deleteReview'");
+
+        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewId));
+
+        reviewRepository.delete(review);
+
+        return modelMapper.map(review, ReviewDto.class);
     }
 
 }

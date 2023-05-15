@@ -10,5 +10,5 @@ public interface ReviewService {
 
     public ReviewDto updateReview(Integer id, ReviewDto reviewDto) throws CustomerException, ProductException, ReviewException;
 
-    public ReviewDto deleteReview(Integer id, Integer reviewId);
+    public ReviewDto deleteReview(Integer reviewId) throws ReviewException;
 }
