@@ -29,7 +29,7 @@ import lombok.Setter;
 public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String reviewId;
+    private Integer reviewId;
     
     @ElementCollection
     @CollectionTable(name="review_images", joinColumns=@JoinColumn(name="reviewId"))

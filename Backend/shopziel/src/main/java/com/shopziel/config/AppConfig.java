@@ -28,6 +28,7 @@ public class AppConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
+                .requestMatchers("/api/products/*").permitAll()
                 .anyRequest().authenticated().and()
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class).formLogin().and()

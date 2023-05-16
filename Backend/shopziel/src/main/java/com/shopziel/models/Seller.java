@@ -31,7 +31,6 @@ public class Seller extends AppUser {
     // @GeneratedValue(strategy = GenerationType.AUTO)
     // private Integer sellerId;
 
-    
     // private String email;
 
     // private String password;
