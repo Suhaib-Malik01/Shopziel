@@ -12,4 +12,9 @@ import lombok.Setter;
 public class ReviewDto {
 
 	private Integer id;
+
+	private String review;
+
+    private Double rating;
+
 }

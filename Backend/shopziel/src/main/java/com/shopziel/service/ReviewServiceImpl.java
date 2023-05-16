@@ -4,6 +4,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.ReviewDto;
 import com.shopziel.exception.CustomerException;
@@ -16,6 +17,7 @@ import com.shopziel.repository.CustomerRepository;
 import com.shopziel.repository.ProductRepository;
 import com.shopziel.repository.ReviewRepository;
 
+@Service
 public class ReviewServiceImpl implements ReviewService {
 
     @Autowired
@@ -83,6 +85,9 @@ public class ReviewServiceImpl implements ReviewService {
         if(review.getProduct().getProductId()!=product.getProductId()) throw new ProductException("Invalid Product ID...");
 
         review =  modelMapper.map(reviewDto, Review.class);
+
+        review.setCustomer(customer);
+        review.setProduct(product);
 
         return modelMapper.map(reviewRepository.save(review), ReviewDto.class);
 
