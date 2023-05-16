@@ -86,7 +86,7 @@ public class ProductServiceImpl implements ProductService {
         if (products.isEmpty())
             throw new ProductException("Products not available");
 
-        return products.stream().map((ele) -> modelMapper.map(ele, ProductDto.class)).collect(Collectors.toList());
+        return products.stream().map((product) -> modelMapper.map(product, ProductDto.class)).collect(Collectors.toList());
     }
 
     @Override
