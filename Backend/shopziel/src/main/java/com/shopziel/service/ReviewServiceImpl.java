@@ -78,6 +78,8 @@ public class ReviewServiceImpl implements ReviewService {
 
         Review review = reviewRepository.findById(reviewDto.getId()).orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewDto.getId()));
 
+        if(review.getCustomer().getId()!=customer.getId()) throw new CustomerException("You are not authorized to edit this review.");
+
         if(review.getProduct().getProductId()!=product.getProductId()) throw new ProductException("Invalid Product ID...");
 
         review =  modelMapper.map(reviewDto, Review.class);
