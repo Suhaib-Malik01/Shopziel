@@ -2,6 +2,8 @@ package com.shopziel.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
@@ -9,6 +11,8 @@ import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.OfferDto;
 import com.shopziel.dto.SellerDto;
 import com.shopziel.dto.UserDto;
+import com.shopziel.exception.CustomerException;
+import com.shopziel.exception.SellerException;
 import com.shopziel.models.AppUser;
 import com.shopziel.models.Customer;
 import com.shopziel.models.Offer;
@@ -56,5 +60,7 @@ public class CustomerServiceImpl implements CustomerService {
 
 		return this.modelMapper.map(customer, CustomerDto.class);
 	}
+
+	
 
 }

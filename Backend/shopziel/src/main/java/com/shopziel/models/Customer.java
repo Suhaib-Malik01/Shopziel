@@ -3,15 +3,13 @@ package com.shopziel.models;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,26 +23,21 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Customer extends AppUser {
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // private Integer customerId;
 
-    // private String firstName;
+	@ManyToMany
+	@JoinTable(name = "join_table_name", joinColumns = @JoinColumn(name = "entity_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
+	private List<Address> addresses;
 
-    // private String lastName;
-    
-    // private String profilePictureUrl;
+	@OneToMany
+	@ElementCollection
+	@JoinColumn(name = "wishlist_id")
+	private List<Product> wishlist = new ArrayList<>();
+	
+	@OneToMany
+	@ElementCollection
+	@JoinColumn(name = "cart_id")
+	private List<OrderItem> cart = new ArrayList<>();
 
-    // @Column(unique = true, nullable = false)
-    // private String email;
-
-    // @Column(name = "password_hash", nullable = false)
-    // private String password;
-
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
-    
-    @OneToMany(mappedBy = "customer")
-    private List<Offer> offers = new ArrayList<>();
+	@OneToMany(mappedBy = "customer")
+	private List<Offer> offers = new ArrayList<>();
 }

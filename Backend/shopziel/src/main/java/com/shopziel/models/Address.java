@@ -1,9 +1,15 @@
 package com.shopziel.models;
 
+import java.util.List;
+
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -33,5 +39,9 @@ public class Address {
 
     private Integer postalCode;
     
+    @Enumerated(EnumType.STRING)
     private AddressType addressType;
+    
+    @ManyToMany(mappedBy = "addresses")
+    private List<AppUser> users;
 }
