@@ -3,6 +3,7 @@ package com.shopziel.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.OrderItemDto;
 import com.shopziel.models.Customer;
@@ -10,6 +11,7 @@ import com.shopziel.models.OrderItem;
 import com.shopziel.repository.CustomerRepository;
 import com.shopziel.repository.OrderItemRepository;
 
+@Service
 public class CartServiceImpl implements CartService {
 
 	@Autowired

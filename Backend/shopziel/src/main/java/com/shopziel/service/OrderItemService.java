@@ -1,5 +1,7 @@
 package com.shopziel.service;
 
+import java.util.List;
+
 import com.shopziel.dto.OrderItemDto;
 import com.shopziel.dto.ProductDto;
 import com.shopziel.exception.CustomerException;
@@ -11,9 +13,9 @@ public interface OrderItemService {
 	
 	OrderItemDto getOrderItemById(Integer orderItemId);
 	
-	OrderItemDto getOrderItemByProductId(Integer productId);
+	List<OrderItemDto> getOrderItemsByProductId(Integer productId);
 	
-	OrderItemDto getAllOrderItemsByOrderId(Integer orderId);
+	List<OrderItemDto> getAllOrderItemsByOrderId(Integer orderId);
 	
 	OrderItemDto updateOrderItem(OrderItemDto orderItemDto);
 	
