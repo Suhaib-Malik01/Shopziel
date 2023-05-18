@@ -2,7 +2,6 @@ package com.shopziel.models;
 
 import java.util.Date;
 
-import jakarta.annotation.Generated;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
