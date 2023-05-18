@@ -3,36 +3,52 @@ package com.shopziel.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.OrderItemDto;
-import com.shopziel.dto.ProductDto;
 import com.shopziel.exception.CustomerException;
+import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
 import com.shopziel.models.OrderItem;
+import com.shopziel.models.Product;
 import com.shopziel.repository.CustomerRepository;
+import com.shopziel.repository.OrderItemRepository;
+import com.shopziel.repository.ProductRepository;
 
-public class OrderItemServiceImpl implements OrderItemService{
+public class OrderItemServiceImpl implements OrderItemService {
 
 	@Autowired
-	private CustomerService customerService;
-	
+	private SessionService sessionService;
+
 	@Autowired
 	private ModelMapper modelMapper;
-	
+
 	@Autowired
 	private CustomerRepository customerRepository;
-	
-	
-	private 
-	
+
+	@Autowired
+	private ProductRepository productRepository;
+
+	@Autowired
+	private OrderItemRepository orderItemRepository;
+
 	@Override
-	public OrderItemDto createOrderItem(OrderItemDto orderItemDto) throws CustomerException {
+	public OrderItemDto createOrderItem(OrderItemDto orderItemDto) throws CustomerException, ProductException {
+
 		OrderItem orderItem = this.modelMapper.map(orderItemDto, OrderItem.class);
-		Customer customer = customerService.getLoggedInCustomer();
+
+		Customer customer = sessionService.getLoggedInCustomer();
+
+		Product product = productRepository.findById(orderItemDto.getProduct().getProductId())
+				.orElseThrow(() -> new ProductException(
+						"Product not found with product Id : " + orderItemDto.getProduct().getProductId()));
+		
+		orderItem.setProduct(product);
 		customer.getCart().add(orderItem);
+
 		customerRepository.save(customer);
-		
-		
+
+		orderItem = orderItemRepository.save(orderItem);
+
+		return this.modelMapper.map(orderItem, OrderItemDto.class);
 	}
 
 	@Override

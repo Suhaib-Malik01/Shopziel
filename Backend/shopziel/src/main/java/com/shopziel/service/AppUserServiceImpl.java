@@ -44,10 +44,10 @@ public class AppUserServiceImpl implements AppUserService {
 		if (userDto.getRole() == Role.ROLE_CUSTOMER) {
 			return customerService.registerCustomer(this.modelMapper.map(userDto, CustomerDto.class));
 		}
-		if (userDto.getRole() == Role.ROLE_SELLER) {
+		else if (userDto.getRole() == Role.ROLE_SELLER) {
 			return sellerService.registerSeller(this.modelMapper.map(userDto, SellerDto.class));
 		}
-		if (userDto.getRole() == Role.ROLE_ADMIN) {
+		else if (userDto.getRole() == Role.ROLE_ADMIN) {
 			return adminService.registerAdmin(this.modelMapper.map(userDto, AdminDto.class));
 		}
 

@@ -24,9 +24,9 @@ public class AppUserController {
 
 	@PostMapping("/")
 	public ResponseEntity<UserDto> registerUser(@RequestBody UserDto userDto) {
-		
+
 		UserDto registeredUserDto = appUserService.registerUser(userDto);
-		
+
 		return new ResponseEntity<UserDto>(registeredUserDto, HttpStatus.OK);
 	}
 
