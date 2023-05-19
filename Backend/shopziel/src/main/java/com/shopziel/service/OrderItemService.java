@@ -1,7 +1,6 @@
 package com.shopziel.service;
 
 import com.shopziel.dto.OrderItemDto;
-import com.shopziel.dto.ProductDto;
 import com.shopziel.exception.CustomerException;
 import com.shopziel.exception.ProductException;
 
