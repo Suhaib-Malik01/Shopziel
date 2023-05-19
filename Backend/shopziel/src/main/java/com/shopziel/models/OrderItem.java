@@ -1,6 +1,10 @@
 package com.shopziel.models;
 
+import java.sql.Date;
+
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -19,18 +23,25 @@ import lombok.Setter;
 @Getter
 @Setter
 public class OrderItem {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer itemId;
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private Integer itemId;
 
-    @ManyToOne
-    @JoinColumn(name = "order_id")
-    private Order order;
+	@ManyToOne
+	@JoinColumn(name = "order_id")
+	private Order order;
 
-    @ManyToOne
-    @JoinColumn(name = "product_id")
-    private Product product;
+	@ManyToOne
+	@JoinColumn(name = "product_id")
+	private Product product;
 
-    private Integer quantity;
-    private Double price;
+	private Integer quantity;
+
+	private Double price;
+
+	@Enumerated(EnumType.STRING)
+	private OrderItemStatus status;
+
+	private Date deliveryDate;
+
 }

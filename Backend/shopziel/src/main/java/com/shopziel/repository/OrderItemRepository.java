@@ -6,9 +6,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.shopziel.models.OrderItem;
 import com.shopziel.models.Product;
+import com.shopziel.models.Seller;
 
 public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 
 	List<OrderItem> findByProduct(Product product);
 
+	List<OrderItem> findByProductSeller(Seller seller);
 }

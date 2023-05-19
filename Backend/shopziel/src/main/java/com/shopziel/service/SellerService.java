@@ -8,5 +8,4 @@ public interface SellerService {
 
 	public SellerDto findByEmail(String name);
     
-	// getProductsBySeller(Integer sellerId); //fetch from orderItems table 
 }
