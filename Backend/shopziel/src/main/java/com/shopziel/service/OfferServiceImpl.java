@@ -7,10 +7,10 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopziel.Enum.OfferStatus;
 import com.shopziel.dto.OfferDto;
 import com.shopziel.models.Customer;
 import com.shopziel.models.Offer;
-import com.shopziel.models.OfferStatus;
 import com.shopziel.repository.OfferRepository;
 
 @Service

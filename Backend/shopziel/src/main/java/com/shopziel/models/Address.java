@@ -2,6 +2,7 @@ package com.shopziel.models;
 
 import java.util.List;
 
+import com.shopziel.Enum.AddressType;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -38,10 +39,8 @@ public class Address {
     private String country;
 
     private Integer postalCode;
-    
+
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
-    
-    @ManyToMany(mappedBy = "addresses")
-    private List<AppUser> users;
+
 }

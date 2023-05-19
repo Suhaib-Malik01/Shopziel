@@ -1,4 +1,4 @@
-package com.shopziel.models;
+package com.shopziel.Enum;
 
 public enum OrderStatus {
     PAYMENT_PENDING, ORDER_CONFIRMED, ORDER_CANCELED, RETURN_REQUESTED, RETURN_APPROVED, RETURN_REJECTED,

@@ -1,5 +1,7 @@
 package com.shopziel.models;
 
+import com.shopziel.Enum.CategoryType;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -21,6 +23,8 @@ public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer categoryId;
-    private String name;
+
+    private CategoryType name;
+    
     private Integer parentId; // confusion about relationship
 }
