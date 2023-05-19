@@ -4,12 +4,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -27,21 +24,21 @@ import lombok.Setter;
 @Setter
 public class Seller extends AppUser {
 
-    // @Id
-    // @GeneratedValue(strategy = GenerationType.AUTO)
-    // private Integer sellerId;
+	// @Id
+	// @GeneratedValue(strategy = GenerationType.AUTO)
+	// private Integer sellerId;
 
-    // private String email;
+	// private String email;
 
-    // private String password;
+	// private String password;
 
-    // private String phoneNumber;
+	// private String phoneNumber;
 
-    @OneToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "address_id")
-    private Address address;
+	@OneToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "address_id")
+	private Address address;
 
-    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private List<Product> products = new ArrayList<>();
+	@OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	private List<Product> products = new ArrayList<>();
 
 }
