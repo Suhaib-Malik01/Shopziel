@@ -34,11 +34,26 @@ public class SellerServiceImpl implements SellerService {
 		return this.modelMapper.map(appUser, SellerDto.class);
 	}
 
+
 	@Override
 	public SellerDto findByEmail(String email) {
 		Seller seller = sellerRepository.findByEmail(email)
 				.orElseThrow(() -> new UsernameNotFoundException(email + " is not registered!!"));
 		return this.modelMapper.map(seller, SellerDto.class);
+	}
+
+
+	@Override
+	public SellerDto updateSeller(SellerDto sellerDto) {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'updateSeller'");
+	}
+
+
+	@Override
+	public SellerDto deleteSeller() {
+		// TODO Auto-generated method stub
+		throw new UnsupportedOperationException("Unimplemented method 'deleteSeller'");
 	}
 
 }

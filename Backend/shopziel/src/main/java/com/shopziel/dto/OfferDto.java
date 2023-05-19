@@ -2,7 +2,7 @@ package com.shopziel.dto;
 
 import java.util.Date;
 
-import com.shopziel.models.OfferStatus;
+import com.shopziel.Enum.OfferStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
