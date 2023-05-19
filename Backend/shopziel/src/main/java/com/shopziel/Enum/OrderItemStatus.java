@@ -1,4 +1,4 @@
-package com.shopziel.models;
+package com.shopziel.Enum;
 
 public enum OrderItemStatus {
 	IN_CART, ORDERED, IN_DELIVERY, CANCELLED, DELIVERED, RETURN_REQUESTED, RETURN_APPROVED, RETURN_REJECTED

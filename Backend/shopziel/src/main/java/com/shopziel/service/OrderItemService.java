@@ -2,13 +2,13 @@ package com.shopziel.service;
 
 import java.util.List;
 
+import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.OrderItemDto;
 import com.shopziel.dto.ProductDto;
+import com.shopziel.dto.ReturnRequestDto;
 import com.shopziel.exception.CustomerException;
 import com.shopziel.exception.ProductException;
-import com.shopziel.models.OrderItemStatus;
 import com.shopziel.models.ReturnRequest;
-import com.shopziel.models.ReturnRequestDto;
 
 public interface OrderItemService {
 

@@ -1,6 +1,10 @@
-package com.shopziel.models;
+package com.shopziel.dto;
 
 import java.sql.Date;
+
+import com.shopziel.Enum.ReturnRequestStatus;
+import com.shopziel.models.Customer;
+import com.shopziel.models.OrderItem;
 
 import lombok.Data;
 

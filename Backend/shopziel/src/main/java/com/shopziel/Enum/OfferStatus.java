@@ -1,4 +1,4 @@
-package com.shopziel.models;
+package com.shopziel.Enum;
 
 public enum OfferStatus {
 

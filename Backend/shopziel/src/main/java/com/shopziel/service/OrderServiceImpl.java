@@ -9,11 +9,6 @@ import org.springframework.stereotype.Service;
 public class OrderServiceImpl implements OrderService {
 
 	@Override
-	public OrderDto createOrder(OrderDto orderDto) {
-		
-	}
-
-	@Override
 	public List<OrderDto> getAllOrdersOfCustomer(Integer customerId) {
 		// TODO Auto-generated method stub
 		return null;
@@ -37,4 +32,9 @@ public class OrderServiceImpl implements OrderService {
 		return null;
 	}
 
+	@Override
+	public OrderDto createOrder(OrderDto orderDto) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

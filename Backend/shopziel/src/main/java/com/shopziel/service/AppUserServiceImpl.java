@@ -7,12 +7,12 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.webjars.NotFoundException;
 
+import com.shopziel.Enum.Role;
 import com.shopziel.dto.AdminDto;
 import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.SellerDto;
 import com.shopziel.dto.UserDto;
 import com.shopziel.models.AppUser;
-import com.shopziel.models.Role;
 import com.shopziel.repository.AppUserRepository;
 
 @Service

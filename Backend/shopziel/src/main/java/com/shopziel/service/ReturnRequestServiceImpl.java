@@ -12,11 +12,11 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
+import com.shopziel.Enum.OrderItemStatus;
+import com.shopziel.dto.ReturnRequestDto;
 import com.shopziel.exception.OrderItemException;
 import com.shopziel.models.OrderItem;
-import com.shopziel.models.OrderItemStatus;
 import com.shopziel.models.ReturnRequest;
-import com.shopziel.models.ReturnRequestDto;
 import com.shopziel.models.Seller;
 import com.shopziel.repository.OrderItemRepository;
 import com.shopziel.repository.ReturnRequestRepository;

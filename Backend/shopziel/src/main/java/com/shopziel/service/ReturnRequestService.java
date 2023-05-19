@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.data.domain.Page;
 
-import com.shopziel.models.ReturnRequestDto;
+import com.shopziel.dto.ReturnRequestDto;
 
 public interface ReturnRequestService {
 

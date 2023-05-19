@@ -60,8 +60,9 @@ public class ReviewServiceImpl implements ReviewService {
     }
 
     @Override
-    public ReviewDto updateReview(Integer id, ReviewDto reviewDto) throws CustomerException, ProductException, ReviewException {
-        
+    public ReviewDto updateReview(Integer id, ReviewDto reviewDto)
+            throws CustomerException, ProductException, ReviewException {
+
         String userEmail;
 
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -78,13 +79,16 @@ public class ReviewServiceImpl implements ReviewService {
         Product product = productRepository.findById(id)
                 .orElseThrow(() -> new ProductException("Product not found with ID: " + id));
 
-        Review review = reviewRepository.findById(reviewDto.getId()).orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewDto.getId()));
+        Review review = reviewRepository.findById(reviewDto.getId())
+                .orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewDto.getId()));
 
-        if(review.getCustomer().getId()!=customer.getId()) throw new CustomerException("You are not authorized to edit this review.");
+        if (review.getCustomer().getId() != customer.getId())
+            throw new CustomerException("You are not authorized to edit this review.");
 
-        if(review.getProduct().getProductId()!=product.getProductId()) throw new ProductException("Invalid Product ID...");
+        if (review.getProduct().getProductId() != product.getProductId())
+            throw new ProductException("Invalid Product ID...");
 
-        review =  modelMapper.map(reviewDto, Review.class);
+        review = modelMapper.map(reviewDto, Review.class);
 
         review.setCustomer(customer);
         review.setProduct(product);
@@ -95,9 +99,9 @@ public class ReviewServiceImpl implements ReviewService {
 
     @Override
     public ReviewDto deleteReview(Integer reviewId) throws ReviewException {
-        // TODO Auto-generated method stub
 
-        Review review = reviewRepository.findById(reviewId).orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewId));
+        Review review = reviewRepository.findById(reviewId)
+                .orElseThrow(() -> new ReviewException("Review not found with ID: " + reviewId));
 
         reviewRepository.delete(review);
 

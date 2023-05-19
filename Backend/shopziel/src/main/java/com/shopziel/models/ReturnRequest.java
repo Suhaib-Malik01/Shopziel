@@ -2,6 +2,8 @@ package com.shopziel.models;
 
 import java.sql.Date;
 
+import com.shopziel.Enum.ReturnRequestStatus;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
