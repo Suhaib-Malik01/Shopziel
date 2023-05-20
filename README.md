@@ -284,7 +284,5 @@ The `OrderItemController` class handles API endpoints related to order items.
 - **Response**: Page of OrderItemDto
 - **HTTP Status**: 200 (OK)
 
-## License
 
-This project is licensed under the [MIT License](LICENSE).
 
