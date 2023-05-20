@@ -2,6 +2,8 @@ package com.shopziel.repository;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import com.shopziel.models.OrderItem;
@@ -13,4 +15,7 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 	List<OrderItem> findByProduct(Product product);
 
 	List<OrderItem> findByProductSeller(Seller seller);
+
+	Page<OrderItem> findAllByOrderOrderByOrderDate(Pageable pageable);
+
 }

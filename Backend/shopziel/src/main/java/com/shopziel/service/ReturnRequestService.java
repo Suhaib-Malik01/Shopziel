@@ -12,5 +12,5 @@ public interface ReturnRequestService {
 
 	List<ReturnRequestDto> viewReturnRequestsForSeller();
 
-	Page<ReturnRequestDto> viewAllReturnRequests(Integer pageSize, String sortDirection);
+	Page<ReturnRequestDto> viewAllReturnRequests(Integer pageSize, String sortDirection, Integer pageNo);
 }
