@@ -2,13 +2,13 @@ package com.shopziel.service;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+
 import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.OrderItemDto;
-import com.shopziel.dto.ProductDto;
-import com.shopziel.dto.ReturnRequestDto;
+
 import com.shopziel.exception.CustomerException;
 import com.shopziel.exception.ProductException;
-import com.shopziel.models.ReturnRequest;
 
 public interface OrderItemService {
 
@@ -25,5 +25,6 @@ public interface OrderItemService {
 	OrderItemDto cancelOrderItem(Integer orderItemId);
 
 	OrderItemStatus viewOrderItemStatus(Integer orderItemId);
-	
+
+	Page<OrderItemDto> getAllOrderItems(Integer pageSize, String sortDirection, Integer pageNo);
 }

@@ -53,4 +53,6 @@ public class Order {
     @OneToOne
     @JoinColumn(name = "delivery_address_id")
     private Address deliveryAddress;
+    
+    private Double totalBillAmount;
 }
