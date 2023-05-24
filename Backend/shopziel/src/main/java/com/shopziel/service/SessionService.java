@@ -1,5 +1,6 @@
 package com.shopziel.service;
 
+import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -30,6 +31,7 @@ public class SessionService {
 	 * @return The logged-in customer.
 	 * @throws CustomerException If the customer is not found or the login has expired.
 	 */
+
 	public Customer getLoggedInCustomer() throws CustomerException {
 		String customerEmail;
 
@@ -66,5 +68,17 @@ public class SessionService {
 
 		// Find and return the seller by email
 		return sellerRepository.findByEmail(sellerEmail).get();
+	}
+
+    public Seller getLoggedInSeller() throws SellerException {
+		String sellerEmail;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+        	sellerEmail = auth.getPrincipal().toString();
+        } else {
+            throw new CustomerException("Login Expired...");
+        }
+        
+       return sellerRepository.findByEmail(sellerEmail).get();
 	}
 }
