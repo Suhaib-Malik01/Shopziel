@@ -2,6 +2,9 @@ package com.shopziel.dto;
 
 import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -13,13 +16,16 @@ import lombok.Setter;
 @Setter
 public class OrderItemDto {
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private Integer itemId;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private OrderDto order;
 
 	private ProductDto product;
 
 	private Integer quantity;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private Double price;
 }

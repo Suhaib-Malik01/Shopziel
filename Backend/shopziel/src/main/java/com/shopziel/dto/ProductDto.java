@@ -4,17 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.shopziel.models.Category;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+@Data
 public class ProductDto {
 
 	private Integer productId;
@@ -31,8 +30,9 @@ public class ProductDto {
 
 	private Category category;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = Access.READ_ONLY)
 	private SellerDto seller;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private List<ReviewDto> reviews = new ArrayList<>();
 }

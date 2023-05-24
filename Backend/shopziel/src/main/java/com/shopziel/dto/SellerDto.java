@@ -7,5 +7,4 @@ import lombok.Data;
 @Data
 public class SellerDto extends UserDto {
     
-    List<ProductDto> products = new ArrayList<>(); 
 }

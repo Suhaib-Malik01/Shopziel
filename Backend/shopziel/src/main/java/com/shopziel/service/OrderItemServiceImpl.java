@@ -19,6 +19,7 @@ import com.shopziel.exception.OrderException;
 import com.shopziel.exception.OrderItemException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
+import com.shopziel.models.Order;
 import com.shopziel.models.OrderItem;
 import com.shopziel.models.Product;
 import com.shopziel.repository.CustomerRepository;
@@ -27,8 +28,8 @@ import com.shopziel.repository.OrderRepository;
 import com.shopziel.repository.ProductRepository;
 
 /**
- * The implementation of the OrderItemService interface.
- * Handles the logic for managing order items.
+ * The implementation of the OrderItemService interface. Handles the logic for
+ * managing order items.
  */
 @Service
 public class OrderItemServiceImpl implements OrderItemService {
@@ -66,14 +67,18 @@ public class OrderItemServiceImpl implements OrderItemService {
 
 		// Set the product and add the order item to the customer's cart
 		orderItem.setProduct(product);
-		customer.getCart().add(orderItem);
-
-		// Save the updated customer
-		customerRepository.save(customer);
-
+		orderItem.setPrice(product.getPrice());
+		orderItem.setStatus(OrderItemStatus.IN_CART);
+		
 		// Save the order item
 		orderItem = orderItemRepository.save(orderItem);
 
+		customer.getCart().add(orderItem);
+
+		// Save the updated customer and product
+		customerRepository.save(customer);
+		productRepository.save(product);
+		
 		// Map the saved order item back to OrderItemDto and return
 		return this.modelMapper.map(orderItem, OrderItemDto.class);
 	}
@@ -167,12 +172,12 @@ public class OrderItemServiceImpl implements OrderItemService {
 		Pageable pageable = PageRequest.of(pageNo, pageSize, Sort.by(direction, "order.orderDate"));
 
 		// Fetch the order items page from the repository
-		Page<OrderItem> orderItemsPage = orderItemRepository.findAllByOrderOrderByOrderDate(pageable);
+		Page<OrderItem> orderItemsPage = orderItemRepository.findByOrderByOrderOrderDate(pageable);
 
 		// Map the order items page to OrderItemDto and return as a new page
 		List<OrderItemDto> orderItemDtoList = orderItemsPage.stream()
 				.map(item -> modelMapper.map(item, OrderItemDto.class)).collect(Collectors.toList());
-		
+
 		return new PageImpl<>(orderItemDtoList, pageable, orderItemsPage.getTotalElements());
 	}
 }
