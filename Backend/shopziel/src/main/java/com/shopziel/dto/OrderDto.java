@@ -4,6 +4,8 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.shopziel.Enum.OrderStatus;
 import com.shopziel.models.Address;
 import com.shopziel.models.Customer;
@@ -14,18 +16,23 @@ import lombok.Data;
 @Data
 public class OrderDto {
 	private Integer orderId;
-
+	
+	@JsonProperty(access = Access.READ_ONLY)
 	private Date orderDate;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private OrderStatus status;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private CustomerDto customer;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private List<OrderItemDto> orderItems = new ArrayList<>();
 
 	private Address billingAddress;
 
 	private Address deliveryAddress;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private Double totalBillAmount;
 }

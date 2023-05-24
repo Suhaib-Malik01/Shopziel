@@ -16,6 +16,6 @@ public interface OrderItemRepository extends JpaRepository<OrderItem, Integer> {
 
 	List<OrderItem> findByProductSeller(Seller seller);
 
-	Page<OrderItem> findAllByOrderOrderByOrderDate(Pageable pageable);
+	Page<OrderItem> findByOrderByOrderOrderDate(Pageable pageable);
 
 }

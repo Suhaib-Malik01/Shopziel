@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
 
 import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.ReturnRequestDto;
@@ -24,6 +25,7 @@ import com.shopziel.repository.ReturnRequestRepository;
 /**
  * Service implementation for managing return requests.
  */
+@Service
 public class ReturnRequestServiceImpl implements ReturnRequestService {
 
 	@Autowired
