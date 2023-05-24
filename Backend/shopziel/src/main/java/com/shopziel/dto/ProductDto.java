@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.shopziel.models.Category;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,7 +28,7 @@ public class ProductDto {
 
 	private Double rating;
 
-	private Category category;
+	private Integer categoryId;
 
 	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
 	private SellerDto seller;

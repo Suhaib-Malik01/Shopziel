@@ -10,10 +10,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.ProductDto;
+import com.shopziel.exception.CategoryException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.exception.SellerException;
 import com.shopziel.models.Product;
 import com.shopziel.models.Seller;
+import com.shopziel.repository.CategoryRepository;
 import com.shopziel.repository.ProductRepository;
 import com.shopziel.repository.SellerRepository;
 
@@ -27,10 +29,13 @@ public class ProductServiceImpl implements ProductService {
     private SellerRepository sellerRepository;
 
     @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
     private ModelMapper modelMapper;
 
     @Override
-    public ProductDto addProduct(ProductDto productDto) throws SellerException {
+    public ProductDto addProduct(ProductDto productDto) throws SellerException, CategoryException {
 
         String userEmail;
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
@@ -47,6 +52,8 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new SellerException("Seller Not Found..."));
 
         product.setSeller(seller);
+
+        product.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new CategoryException("Category Not Found")));
 
         product = productRepository.save(product);
 

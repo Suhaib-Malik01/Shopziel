@@ -55,6 +55,7 @@ public class SellerServiceImpl implements SellerService {
 		Seller updatedSeller = modelMapper.map(sellerDto,Seller.class);
 
 		
+		
 		return modelMapper.map(sellerRepository.save(updatedSeller),SellerDto.class);
 	}
 

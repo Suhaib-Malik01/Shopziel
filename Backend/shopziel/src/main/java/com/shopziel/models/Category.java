@@ -1,11 +1,15 @@
 package com.shopziel.models;
 
-import com.shopziel.Enum.CategoryType;
+import java.util.ArrayList;
+import java.util.List;
+
+
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -24,7 +28,10 @@ public class Category {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer categoryId;
 
-    private CategoryType name;
-    
-    private Integer parentId; // confusion about relationship
+    private String image;
+
+    private String name;
+
+    @OneToMany
+    List<Product> products = new ArrayList<>();
 }
