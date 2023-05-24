@@ -6,6 +6,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.SellerDto;
+import com.shopziel.exception.SellerException;
 import com.shopziel.models.AppUser;
 import com.shopziel.models.Seller;
 import com.shopziel.repository.AppUserRepository;
@@ -22,6 +23,9 @@ public class SellerServiceImpl implements SellerService {
 
 	@Autowired
 	private SellerRepository sellerRepository;
+
+	@Autowired
+	private SessionService sessionService;
 
 	@Override
 	public SellerDto registerSeller(SellerDto sellerDto) {
@@ -44,16 +48,28 @@ public class SellerServiceImpl implements SellerService {
 
 
 	@Override
-	public SellerDto updateSeller(SellerDto sellerDto) {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'updateSeller'");
+	public SellerDto updateSeller(SellerDto sellerDto) throws SellerException {
+		
+		Seller seller = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new SellerException("Seller Not found with id: " + sellerDto.getId()));
+
+		Seller updatedSeller = modelMapper.map(sellerDto,Seller.class);
+
+		
+		
+		return modelMapper.map(sellerRepository.save(updatedSeller),SellerDto.class);
 	}
 
 
 	@Override
-	public SellerDto deleteSeller() {
-		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException("Unimplemented method 'deleteSeller'");
+	public SellerDto deleteSeller() throws SellerException {
+		
+
+		Seller seller= sessionService.getLoggedInSeller();
+
+
+		sellerRepository.delete(seller);
+
+		return modelMapper.map(seller, SellerDto.class);
 	}
 
 }

@@ -1,0 +1,55 @@
+package com.shopziel.service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.shopziel.dto.CategoryDto;
+import com.shopziel.dto.ProductDto;
+import com.shopziel.models.Category;
+import com.shopziel.repository.CategoryRepository;
+import com.shopziel.exception.CategoryException;;
+
+@Service
+public class CategoryServiceImpl implements CategoryService {
+
+    @Autowired
+    private CategoryRepository categoryRepository;
+
+    @Autowired
+    private ModelMapper modelMapper;
+
+    @Override
+    public CategoryDto addCategory(CategoryDto categoryDto) {
+        
+        Category category = categoryRepository.save(modelMapper.map(categoryDto, Category.class));
+
+        return modelMapper.map(category, CategoryDto.class);
+    }
+
+    @Override
+    public List<CategoryDto> getAllCategory() {
+
+        List<Category> categories = categoryRepository.findAll();
+
+        return categories.stream().map(category -> modelMapper.map(category, CategoryDto.class))
+                .collect(Collectors.toList());
+
+    }
+
+    @Override
+    public List<ProductDto> getCategoryProduct(Integer categoryId) throws CategoryException {
+
+        Category category = categoryRepository.findById(categoryId)
+                .orElseThrow(() -> new CategoryException("Category not found"));
+
+        return category.getProducts().stream().map(product -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
+    }
+
+    
+
+}

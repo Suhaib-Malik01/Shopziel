@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopziel.dto.ProductDto;
+import com.shopziel.exception.CategoryException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.exception.SellerException;
 import com.shopziel.service.ProductService;
@@ -26,7 +27,7 @@ public class SellerController {
     private ProductService productService;
 
     @PostMapping("/products")
-    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) throws SellerException {
+    public ResponseEntity<ProductDto> addProduct(@RequestBody ProductDto productDto) throws SellerException, CategoryException {
 
         return new ResponseEntity<ProductDto>(productService.addProduct(productDto), HttpStatus.OK);
     }
