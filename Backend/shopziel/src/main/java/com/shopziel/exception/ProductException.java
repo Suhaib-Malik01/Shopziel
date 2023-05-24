@@ -1,10 +1,13 @@
 package com.shopziel.exception;
 
-public class ProductException extends Exception{
+public class ProductException extends RuntimeException {
 
-    public ProductException(String msg) {
-        super(msg);
-    }
-    
+	public ProductException() {
+		// TODO Auto-generated constructor stub
+	}
+
+	public ProductException(String msg) {
+		super(msg);
+	}
 
 }
