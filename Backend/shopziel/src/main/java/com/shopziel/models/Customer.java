@@ -28,14 +28,10 @@ public class Customer extends AppUser {
 	@JoinTable(name = "join_table_name", joinColumns = @JoinColumn(name = "entity_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
 	private List<Address> addresses;
 
-	@OneToMany
 	@ElementCollection
-	@JoinColumn(name = "wishlist_id")
 	private List<Product> wishlist = new ArrayList<>();
-	
-	@OneToMany
+
 	@ElementCollection
-	@JoinColumn(name = "cart_id")
 	private List<OrderItem> cart = new ArrayList<>();
 
 	@OneToMany(mappedBy = "customer")

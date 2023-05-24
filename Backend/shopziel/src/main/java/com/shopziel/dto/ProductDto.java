@@ -5,15 +5,13 @@ import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Setter
-@Getter
+
+import lombok.Data;
+
+
+@Data
 public class ProductDto {
 
 	private Integer productId;
@@ -30,8 +28,9 @@ public class ProductDto {
 
 	private Integer categoryId;
 
-	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	@JsonProperty(access = Access.READ_ONLY)
 	private SellerDto seller;
 
+	@JsonProperty(access = Access.READ_ONLY)
 	private List<ReviewDto> reviews = new ArrayList<>();
 }
