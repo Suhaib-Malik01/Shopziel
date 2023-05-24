@@ -2,7 +2,8 @@ package com.shopziel.service;
 
 import java.util.List;
 
-import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
+import com.shopziel.dto.OrderDto;
+
 
 public interface OrderService {
 
@@ -10,9 +11,9 @@ public interface OrderService {
 
 	List<OrderDto> getAllOrdersOfCustomer(Integer customerId);
 
-	OrderDto getOrderById(Integer orderId);
+	List<OrderDto> getAllOrdersOfLoggedInCustomer();
 
-	OrderDto updateOrder(Integer orderId, OrderDto updatedOrderDto);
+	OrderDto getOrderById(Integer orderId);
 
 	OrderDto cancelOrder(Integer orderId);
 

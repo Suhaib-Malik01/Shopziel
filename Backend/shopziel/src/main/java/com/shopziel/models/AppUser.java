@@ -1,5 +1,7 @@
 package com.shopziel.models;
 
+import com.shopziel.Enum.Role;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;

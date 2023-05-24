@@ -1,6 +1,6 @@
 package com.shopziel.dto;
 
-import com.shopziel.models.Role;
+import com.shopziel.Enum.Role;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
