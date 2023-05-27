@@ -25,7 +25,7 @@ public class AppConfig {
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable()
+                .and().csrf().disable().cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
