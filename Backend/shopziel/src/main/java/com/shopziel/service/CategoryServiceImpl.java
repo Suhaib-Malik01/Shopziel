@@ -41,14 +41,16 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public List<ProductDto> getCategoryProduct(Integer categoryId) throws CategoryException {
+    public CategoryDto getCategory(Integer categoryId) throws CategoryException {
 
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryException("Category not found"));
 
-        return category.getProducts().stream().map(product -> modelMapper.map(product, ProductDto.class))
-                .collect(Collectors.toList());
+        return modelMapper.map(category,CategoryDto.class);
     }
+
+    
+   
 
     
 
