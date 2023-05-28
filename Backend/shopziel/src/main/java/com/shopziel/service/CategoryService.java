@@ -12,5 +12,7 @@ public interface CategoryService {
     
     public List<CategoryDto> getAllCategory();
 
-    public List<ProductDto> getCategoryProduct(Integer categoryId) throws CategoryException;
+    public CategoryDto getCategory(Integer categoryId) throws CategoryException;
+
+    
 }
