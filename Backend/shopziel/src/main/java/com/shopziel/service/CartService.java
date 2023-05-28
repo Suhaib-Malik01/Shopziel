@@ -8,11 +8,11 @@ import com.shopziel.dto.OrderItemDto;
 public interface CartService {
 
 	OrderItemDto addToCart(OrderItemDto orderItemDto);
-	
+
 	OrderItemDto removeFromCart(OrderItemDto orderItemDto);
-	
+
 	OrderDto proceedToPayment();
-	
+
 	Double getCartTotal();
 
 	List<OrderItemDto> getOrderItemsOfCart();
