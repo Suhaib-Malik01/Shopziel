@@ -69,5 +69,4 @@ public class SessionService {
 		return sellerRepository.findByEmail(sellerEmail).get();
 	}
 
-    
 }

@@ -1,5 +1,7 @@
 package com.shopziel.service;
 
+import java.util.List;
+
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
 
@@ -12,4 +14,6 @@ public interface CartService {
 	OrderDto proceedToPayment();
 	
 	Double getCartTotal();
+
+	List<OrderItemDto> getOrderItemsOfCart();
 }
