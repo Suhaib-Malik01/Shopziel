@@ -10,6 +10,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.channel.ChannelProcessingFilter;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
 @Configuration
@@ -24,14 +25,17 @@ public class AppConfig {
 
         http.sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().csrf().disable()
+                .and().csrf().disable().cors().disable()
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
-                .requestMatchers("/api/products/*").permitAll() // permit only get requests
+                .requestMatchers("/api/products/*", "/api/category").permitAll() // permit only get requests
                 .anyRequest().authenticated().and()
+                .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
-                .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class).formLogin().and()
+                .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
+                .formLogin()
+                .and()
                 .httpBasic();
 
         return http.build();
