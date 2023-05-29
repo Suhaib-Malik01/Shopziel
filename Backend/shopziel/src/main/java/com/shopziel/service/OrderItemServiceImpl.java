@@ -19,7 +19,6 @@ import com.shopziel.exception.OrderException;
 import com.shopziel.exception.OrderItemException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
-import com.shopziel.models.Order;
 import com.shopziel.models.OrderItem;
 import com.shopziel.models.Product;
 import com.shopziel.repository.CustomerRepository;

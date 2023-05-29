@@ -61,5 +61,5 @@ public class OfferServiceImpl implements OfferService {
 
 		// Convert the offer entity to DTO and return it
 		return modelMapper.map(welcomeOffer, OfferDto.class);
-	}
+	} 
 }
