@@ -7,5 +7,7 @@ public interface CustomerService {
 	CustomerDto registerCustomer(CustomerDto customerDto);
 
 	CustomerDto findByEmail(String email);
+
+	public CustomerDto getCustomer();
     
 }
