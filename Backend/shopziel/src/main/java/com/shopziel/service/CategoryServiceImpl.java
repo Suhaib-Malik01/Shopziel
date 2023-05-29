@@ -49,6 +49,8 @@ public class CategoryServiceImpl implements CategoryService {
 
         CategoryDto categoryDto = modelMapper.map(category, CategoryDto.class);
 
+        categoryDto.setProducts(category.getProducts().stream()
+                .map(product -> modelMapper.map(product, ProductDto.class)).collect(Collectors.toList()));
         return categoryDto;
     }
 
