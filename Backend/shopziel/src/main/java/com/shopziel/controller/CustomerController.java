@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopziel.dto.CartDto;
 import com.shopziel.dto.CustomerDto;
 
 import com.shopziel.dto.OrderItemDto;
@@ -74,8 +75,8 @@ public class CustomerController {
     }
 
     @GetMapping("/cart")
-    public ResponseEntity<List<OrderItemDto>> getCartItems() {
+    public ResponseEntity<CartDto> getCartItems() {
 
-        return new ResponseEntity<List<OrderItemDto>>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
+        return new ResponseEntity<CartDto>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
     }
 }

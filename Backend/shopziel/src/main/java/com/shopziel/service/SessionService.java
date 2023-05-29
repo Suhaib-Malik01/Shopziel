@@ -68,4 +68,5 @@ public class SessionService {
 		// Find and return the seller by email
 		return sellerRepository.findByEmail(sellerEmail).get();
 	}
+
 }
