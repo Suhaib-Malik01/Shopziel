@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.CategoryDto;
-import com.shopziel.dto.ProductDto;
+
 import com.shopziel.models.Category;
 import com.shopziel.repository.CategoryRepository;
 import com.shopziel.exception.CategoryException;;

@@ -50,7 +50,7 @@ public class SellerServiceImpl implements SellerService {
 	@Override
 	public SellerDto updateSeller(SellerDto sellerDto) throws SellerException {
 		
-		Seller seller = sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new SellerException("Seller Not found with id: " + sellerDto.getId()));
+		sellerRepository.findById(sellerDto.getId()).orElseThrow(() -> new SellerException("Seller Not found with id: " + sellerDto.getId()));
 
 		Seller updatedSeller = modelMapper.map(sellerDto,Seller.class);
 

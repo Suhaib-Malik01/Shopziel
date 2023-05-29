@@ -31,6 +31,9 @@ public class CustomerServiceImpl implements CustomerService {
 	@Autowired
 	private OfferService offerService;
 
+	@Autowired
+	private SessionService sessionService;
+
 	/**
 	 * Registers a new customer.
 	 *
@@ -67,7 +70,8 @@ public class CustomerServiceImpl implements CustomerService {
 	 *
 	 * @param email The email of the customer to find.
 	 * @return The DTO object representing the found customer.
-	 * @throws UsernameNotFoundException If a customer with the specified email is not found.
+	 * @throws UsernameNotFoundException If a customer with the specified email is
+	 *                                   not found.
 	 */
 	@Override
 	public CustomerDto findByEmail(String email) {
@@ -79,4 +83,11 @@ public class CustomerServiceImpl implements CustomerService {
 		// Map the customer to a CustomerDto and return it
 		return this.modelMapper.map(customer, CustomerDto.class);
 	}
+
+	@Override
+	public CustomerDto getCustomer() {
+
+		return modelMapper.map(sessionService.getLoggedInCustomer(), CustomerDto.class);
+	}
+
 }
