@@ -1,6 +1,6 @@
 package com.shopziel.controller;
 
-import org.apache.catalina.connector.Response;
+
 
 import java.util.List;
 
@@ -16,7 +16,6 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-
 
 import com.shopziel.dto.CustomerDto;
 
@@ -44,32 +43,29 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-	@Autowired
-	private ReviewService reviewService;
-
-
-	@Autowired
-	private CartService cartService;
-
+    @Autowired
+    private CartService cartService;
 
     @PutMapping("/review/{id}")
     public ResponseEntity<ReviewDto> updateReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
             throws CustomerException, ProductException, ReviewException {
 
-	@PostMapping("/review/{id}")
-	public ResponseEntity<ReviewDto> addReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
-			throws ProductException, CustomerException {
+        return new ResponseEntity<ReviewDto>(reviewService.updateReview(id, reviewDto), HttpStatus.ACCEPTED);
+    }
 
-		return new ResponseEntity<ReviewDto>(reviewService.addReview(id, reviewDto), HttpStatus.OK);
-	}
+    @PostMapping("/review/{id}")
+    public ResponseEntity<ReviewDto> addReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
+            throws ProductException, CustomerException {
 
+        return new ResponseEntity<ReviewDto>(reviewService.addReview(id, reviewDto), HttpStatus.OK);
+    }
 
     @DeleteMapping("/review/{id}")
     public ResponseEntity<ReviewDto> deleteReview(@PathVariable Integer id) throws ReviewException {
 
-		return new ResponseEntity<ReviewDto>(reviewService.updateReview(id, reviewDto), HttpStatus.ACCEPTED);
-	}
+        return new ResponseEntity<ReviewDto>(reviewService.deleteReview(id), HttpStatus.ACCEPTED);
 
+    }
 
     @GetMapping("/")
     public ResponseEntity<CustomerDto> getCustomerDetails() {
@@ -77,12 +73,9 @@ public class CustomerController {
         return new ResponseEntity<CustomerDto>(customerService.getCustomer(), HttpStatus.OK);
     }
 
-		return new ResponseEntity<ReviewDto>(reviewService.deleteReview(id), HttpStatus.ACCEPTED);
-	}
+    @GetMapping("/cart")
+    public ResponseEntity<List<OrderItemDto>> getCartItems() {
 
-
-	@GetMapping("/cart")
-	public ResponseEntity<List<OrderItemDto>> getCartItems() {
-		return new ResponseEntity<List<OrderItemDto>>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
-	}
+        return new ResponseEntity<List<OrderItemDto>>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
+    }
 }
