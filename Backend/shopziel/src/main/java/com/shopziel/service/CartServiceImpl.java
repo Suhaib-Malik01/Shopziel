@@ -1,5 +1,7 @@
 package com.shopziel.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -114,11 +116,18 @@ public class CartServiceImpl implements CartService {
 		Double cartTotal = 0.00;
 
 		for (OrderItem orderItem : customer.getCart()) {
-			// Calculate the total price by multiplying the price with quantity for each item
+			// Calculate the total price by multiplying the price with quantity for each
+			// item
 			cartTotal += (orderItem.getPrice() * orderItem.getQuantity());
 		}
 
 		// Return the cart total
 		return cartTotal;
+	}
+
+	@Override
+	public List<OrderItemDto> getOrderItemsOfCart() {
+		List<OrderItem> cart = this.sessionService.getLoggedInCustomer().getCart();
+		return cart.stream().map((item) -> this.modelMapper.map(item, OrderItemDto.class)).toList();
 	}
 }
