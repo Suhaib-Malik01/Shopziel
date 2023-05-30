@@ -3,8 +3,7 @@ package com.shopziel.models;
 import java.util.ArrayList;
 import java.util.List;
 
-
-
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -32,6 +31,7 @@ public class Category {
 
     private String name;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "category")
+    
     List<Product> products = new ArrayList<>();
 }
