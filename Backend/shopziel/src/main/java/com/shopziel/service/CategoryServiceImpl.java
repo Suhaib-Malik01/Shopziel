@@ -8,9 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.shopziel.dto.CategoryDto;
-import com.shopziel.dto.ProductDto;
+
 import com.shopziel.models.Category;
-import com.shopziel.models.Product;
+
 import com.shopziel.repository.CategoryRepository;
 import com.shopziel.exception.CategoryException;;
 
@@ -50,6 +50,17 @@ public class CategoryServiceImpl implements CategoryService {
         CategoryDto categoryDto = modelMapper.map(category, CategoryDto.class);
 
         return categoryDto;
+    }
+
+    @Override
+    public CategoryDto updateCategory(CategoryDto categoryDto) throws CategoryException {
+
+        categoryRepository.findById(categoryDto.getCategoryId())
+                .orElseThrow(() -> new CategoryException("Category not found"));
+
+        Category updatedCategory = modelMapper.map(categoryDto, Category.class);
+
+        return modelMapper.map(updatedCategory, CategoryDto.class);
     }
 
 }
