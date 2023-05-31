@@ -18,4 +18,6 @@ public interface ProductService {
     public ProductDto deleteProduct(int id) throws ProductException, SellerException;
 
     public ProductDto getProduct(Integer id) throws ProductException;
+
+    public List<ProductDto> searchProducts(String keyword);
 }
