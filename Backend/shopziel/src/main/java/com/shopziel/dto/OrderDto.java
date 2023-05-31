@@ -8,8 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.shopziel.Enum.OrderStatus;
 import com.shopziel.models.Address;
-import com.shopziel.models.Customer;
-import com.shopziel.models.OrderItem;
+
 
 import lombok.Data;
 
