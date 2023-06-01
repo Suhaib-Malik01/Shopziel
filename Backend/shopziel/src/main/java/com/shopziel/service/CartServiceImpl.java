@@ -6,13 +6,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
+import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
 import com.shopziel.models.OrderItem;
+import com.shopziel.models.Product;
 import com.shopziel.repository.CustomerRepository;
 import com.shopziel.repository.OrderItemRepository;
+import com.shopziel.repository.ProductRepository;
 
 /**
  * Service class for managing the shopping cart.
@@ -25,6 +29,9 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private ModelMapper modelMapper;
+
+	@Autowired
+	private ProductRepository productRepository;
 
 	@Autowired
 	private CustomerRepository customerRepository;
@@ -46,6 +53,13 @@ public class CartServiceImpl implements CartService {
 
 		// Map the orderItemDto to an OrderItem entity
 		OrderItem orderItem = this.modelMapper.map(orderItemDto, OrderItem.class);
+
+		Product product = productRepository.findById(orderItemDto.getProductId())
+				.orElseThrow(() -> new ProductException("Product not found with ID: " + orderItemDto.getProductId()));
+
+		orderItem.setProduct(product);
+
+		orderItem.setStatus(OrderItemStatus.IN_CART);
 
 		if (!customer.getCart().contains(orderItem)) {
 			// Add the order item to the cart if it's not already present
@@ -132,7 +146,7 @@ public class CartServiceImpl implements CartService {
 		CartDto cartDto = new CartDto();
 		cartDto.setCartItems(cart.stream().map((item) -> this.modelMapper.map(item, OrderItemDto.class)).toList());
 		cartDto.setCartTotal(getCartTotal());
-		cartDto.setTotalProducts(cartDto.getCartItems().size());	
+		cartDto.setTotalProducts(cartDto.getCartItems().size());
 		return cartDto;
 	}
 }
