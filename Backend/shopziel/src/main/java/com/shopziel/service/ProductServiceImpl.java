@@ -53,7 +53,8 @@ public class ProductServiceImpl implements ProductService {
 
         product.setSeller(seller);
 
-        product.setCategory(categoryRepository.findById(productDto.getCategoryId()).orElseThrow(() -> new CategoryException("Category Not Found")));
+        product.setCategory(categoryRepository.findById(productDto.getCategoryId())
+                .orElseThrow(() -> new CategoryException("Category Not Found")));
 
         product = productRepository.save(product);
 
@@ -93,7 +94,8 @@ public class ProductServiceImpl implements ProductService {
         if (products.isEmpty())
             throw new ProductException("Products not available");
 
-        return products.stream().map((product) -> modelMapper.map(product, ProductDto.class)).collect(Collectors.toList());
+        return products.stream().map((product) -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -129,6 +131,14 @@ public class ProductServiceImpl implements ProductService {
                 .orElseThrow(() -> new ProductException("Product not found with ID: " + id));
 
         return modelMapper.map(product, ProductDto.class);
+    }
+
+    public List<ProductDto> searchProducts(String keyword) {
+
+        List<Product> products = productRepository.findByNameContainingIgnoreCase(keyword);
+
+        return products.stream().map((product) -> modelMapper.map(product, ProductDto.class))
+                .collect(Collectors.toList());
     }
 
 }

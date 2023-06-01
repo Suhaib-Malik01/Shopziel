@@ -6,6 +6,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.shopziel.dto.CartDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
 import com.shopziel.models.Customer;
@@ -126,8 +127,12 @@ public class CartServiceImpl implements CartService {
 	}
 
 	@Override
-	public List<OrderItemDto> getOrderItemsOfCart() {
+	public CartDto getOrderItemsOfCart() {
 		List<OrderItem> cart = this.sessionService.getLoggedInCustomer().getCart();
-		return cart.stream().map((item) -> this.modelMapper.map(item, OrderItemDto.class)).toList();
+		CartDto cartDto = new CartDto();
+		cartDto.setCartItems(cart.stream().map((item) -> this.modelMapper.map(item, OrderItemDto.class)).toList());
+		cartDto.setCartTotal(getCartTotal());
+		cartDto.setTotalProducts(cartDto.getCartItems().size());	
+		return cartDto;
 	}
 }
