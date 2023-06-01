@@ -12,6 +12,8 @@ public interface CategoryService {
     
     public List<CategoryDto> getAllCategory();
 
+    public CategoryDto updateCategory(CategoryDto categoryDto) throws CategoryException;
+
     public CategoryDto getCategory(Integer categoryId) throws CategoryException;
 
     

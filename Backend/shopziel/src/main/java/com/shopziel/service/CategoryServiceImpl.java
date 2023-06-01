@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import com.shopziel.dto.CategoryDto;
 
 import com.shopziel.models.Category;
+
 import com.shopziel.repository.CategoryRepository;
 import com.shopziel.exception.CategoryException;;
 
@@ -24,7 +25,7 @@ public class CategoryServiceImpl implements CategoryService {
 
     @Override
     public CategoryDto addCategory(CategoryDto categoryDto) {
-        
+
         Category category = categoryRepository.save(modelMapper.map(categoryDto, Category.class));
 
         return modelMapper.map(category, CategoryDto.class);
@@ -46,12 +47,20 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = categoryRepository.findById(categoryId)
                 .orElseThrow(() -> new CategoryException("Category not found"));
 
-        return modelMapper.map(category,CategoryDto.class);
+        CategoryDto categoryDto = modelMapper.map(category, CategoryDto.class);
+
+        return categoryDto;
     }
 
-    
-   
+    @Override
+    public CategoryDto updateCategory(CategoryDto categoryDto) throws CategoryException {
 
-    
+        categoryRepository.findById(categoryDto.getCategoryId())
+                .orElseThrow(() -> new CategoryException("Category not found"));
+
+        Category updatedCategory = modelMapper.map(categoryDto, Category.class);
+
+        return modelMapper.map(categoryRepository.save(updatedCategory), CategoryDto.class);
+    }
 
 }
