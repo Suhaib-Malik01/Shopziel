@@ -22,6 +22,10 @@ public class OrderItemDto {
 	@JsonProperty(access = Access.READ_ONLY)
 	private OrderDto order;
 
+	@JsonProperty(access = Access.WRITE_ONLY)
+	private Integer productId;
+
+	@JsonProperty(access = Access.READ_ONLY)
 	private ProductDto product;
 
 	private Integer quantity;
