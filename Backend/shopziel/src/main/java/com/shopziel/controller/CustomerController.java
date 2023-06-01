@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.CustomerDto;
-
+import com.shopziel.dto.OrderItemDto;
 import com.shopziel.dto.ReviewDto;
 import com.shopziel.exception.CustomerException;
 import com.shopziel.exception.ProductException;
@@ -32,47 +32,63 @@ import com.shopziel.service.ReviewService;
 @RestController
 @RequestMapping("/api/customers")
 @CrossOrigin(origins = "*")
+
 public class CustomerController {
 
-    @Autowired
-    private ReviewService reviewService;
+	@Autowired
+	private ReviewService reviewService;
 
-    @Autowired
-    private CustomerService customerService;
+	@Autowired
+	private CustomerService customerService;
 
-    @Autowired
-    private CartService cartService;
+	@Autowired
+	private CartService cartService;
 
-    @PutMapping("/review/{id}")
-    public ResponseEntity<ReviewDto> updateReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
-            throws CustomerException, ProductException, ReviewException {
+	/**
+	 * 
+	 * @param id
+	 * @param reviewDto
+	 * @return ResponseEntity<ReviewDto>
+	 * @throws CustomerException
+	 * @throws ProductException
+	 * @throws ReviewException
+	 */
+	@PutMapping("/review/{id}")
+	public ResponseEntity<ReviewDto> updateReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
+			throws CustomerException, ProductException, ReviewException {
 
-        return new ResponseEntity<ReviewDto>(reviewService.updateReview(id, reviewDto), HttpStatus.ACCEPTED);
-    }
+		return new ResponseEntity<ReviewDto>(reviewService.updateReview(id, reviewDto), HttpStatus.ACCEPTED);
+	}
 
-    @PostMapping("/review/{id}")
-    public ResponseEntity<ReviewDto> addReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
-            throws ProductException, CustomerException {
+	@PostMapping("/review/{id}")
+	public ResponseEntity<ReviewDto> addReview(@PathVariable Integer id, @RequestBody ReviewDto reviewDto)
+			throws ProductException, CustomerException {
 
-        return new ResponseEntity<ReviewDto>(reviewService.addReview(id, reviewDto), HttpStatus.OK);
-    }
+		return new ResponseEntity<ReviewDto>(reviewService.addReview(id, reviewDto), HttpStatus.OK);
+	}
 
-    @DeleteMapping("/review/{id}")
-    public ResponseEntity<ReviewDto> deleteReview(@PathVariable Integer id) throws ReviewException {
+	@DeleteMapping("/review/{id}")
+	public ResponseEntity<ReviewDto> deleteReview(@PathVariable Integer id) throws ReviewException {
 
-        return new ResponseEntity<ReviewDto>(reviewService.deleteReview(id), HttpStatus.ACCEPTED);
+		return new ResponseEntity<ReviewDto>(reviewService.deleteReview(id), HttpStatus.ACCEPTED);
 
-    }
+	}
 
-    @GetMapping("/")
-    public ResponseEntity<CustomerDto> getCustomerDetails() {
+	@GetMapping("/")
+	public ResponseEntity<CustomerDto> getCustomerDetails() {
 
-        return new ResponseEntity<CustomerDto>(customerService.getCustomer(), HttpStatus.OK);
-    }
+		return new ResponseEntity<CustomerDto>(customerService.getCustomer(), HttpStatus.OK);
+	}
 
-    @GetMapping("/cart")
-    public ResponseEntity<CartDto> getCartItems() {
+	@GetMapping("/cart")
+	public ResponseEntity<CartDto> getCartItems() {
 
-        return new ResponseEntity<CartDto>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
-    }
+		return new ResponseEntity<CartDto>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
+	}
+
+	@PostMapping("/cart/add")
+	public ResponseEntity<OrderItemDto> addToCart(@RequestBody OrderItemDto orderItemDto) {
+		return new ResponseEntity<OrderItemDto>(cartService.addToCart(orderItemDto), HttpStatus.OK);
+
+	}
 }
