@@ -1,8 +1,11 @@
 package com.shopziel.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 
@@ -32,8 +35,8 @@ public class Customer extends AppUser {
 	private List<Product> wishlist = new ArrayList<>();
 
 	@ElementCollection
-	private List<OrderItem> cart = new ArrayList<>();
+	private Set<OrderItem> cart = new HashSet<>();
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
 	private List<Offer> offers = new ArrayList<>();
 }
