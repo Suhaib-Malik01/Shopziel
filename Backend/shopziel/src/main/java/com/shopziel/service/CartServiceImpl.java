@@ -73,8 +73,8 @@ public class CartServiceImpl implements CartService {
 		}
 
 		// Save the customer and order item in the repositories
-		customerRepository.save(customer);
 		orderItem = orderItemRepository.save(orderItem);
+		customerRepository.save(customer);
 
 		// Map the saved order item to an OrderItemDto and return it
 		return this.modelMapper.map(orderItem, OrderItemDto.class);
@@ -135,7 +135,7 @@ public class CartServiceImpl implements CartService {
 		for (OrderItem orderItem : customer.getCart()) {
 			// Calculate the total price by multiplying the price with quantity for each
 			// item
-			cartTotal += (orderItem.getPrice() * orderItem.getQuantity());
+			cartTotal += (orderItem.getPrice());
 		}
 
 		// Return the cart total
