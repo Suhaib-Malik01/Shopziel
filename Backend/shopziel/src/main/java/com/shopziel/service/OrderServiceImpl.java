@@ -101,6 +101,9 @@ public class OrderServiceImpl implements OrderService {
 		// Map the OrderDto to Order entity
 		Order order = modelMapper.map(orderDto, Order.class);
 		order.setOrderDate(Date.valueOf(LocalDate.now()));
+		order.setStatus(OrderStatus.PAYMENT_PENDING);
+		order.setCustomer(customer);
+		order = orderRepository.save(order);
 
 		Double totalBillAmount = 0.00;
 
@@ -110,15 +113,13 @@ public class OrderServiceImpl implements OrderService {
 			item.setOrder(order);
 			item.setDeliveryDate(Date.valueOf(LocalDate.now().plusDays(7)));
 
-			totalBillAmount += (item.getPrice() * item.getQuantity());
+			totalBillAmount += (item.getPrice());
 
 			// Save the order item and add it to orderItemList in order
 			order.getOrderItems().add(orderItemRepository.save(item));
 		}
 
-		order.setStatus(OrderStatus.PAYMENT_PENDING);
 		order.setTotalBillAmount(totalBillAmount);
-		order.setCustomer(customer);
 
 		// Save the order
 		order = orderRepository.save(order);
