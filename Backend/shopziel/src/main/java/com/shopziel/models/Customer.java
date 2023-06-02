@@ -3,6 +3,7 @@ package com.shopziel.models;
 import java.util.ArrayList;
 import java.util.List;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 
@@ -34,6 +35,6 @@ public class Customer extends AppUser {
 	@ElementCollection
 	private List<OrderItem> cart = new ArrayList<>();
 
-	@OneToMany(mappedBy = "customer")
+	@OneToMany(mappedBy = "customer",cascade = CascadeType.ALL)
 	private List<Offer> offers = new ArrayList<>();
 }
