@@ -1,6 +1,7 @@
 package com.shopziel.service;
 
 import java.util.List;
+import java.util.Set;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,8 @@ import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
+import com.shopziel.exception.CustomerException;
+import com.shopziel.exception.OrderItemException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
 import com.shopziel.models.OrderItem;
@@ -63,14 +66,7 @@ public class CartServiceImpl implements CartService {
 
 		orderItem.setStatus(OrderItemStatus.IN_CART);
 
-		if (!customer.getCart().contains(orderItem)) {
-			// Add the order item to the cart if it's not already present
-			customer.getCart().add(orderItem);
-		} else {
-			// Increase the quantity if the order item is already in the cart
-			int i = customer.getCart().indexOf(orderItem);
-			customer.getCart().get(i).setQuantity(customer.getCart().get(i).getQuantity() + 1);
-		}
+		customer.getCart().add(orderItem);
 
 		// Save the customer and order item in the repositories
 		orderItem = orderItemRepository.save(orderItem);
@@ -87,25 +83,22 @@ public class CartServiceImpl implements CartService {
 	 * @return The DTO object representing the removed order item.
 	 */
 	@Override
-	public OrderItemDto removeFromCart(OrderItemDto orderItemDto) {
+	public OrderItemDto removeFromCart(Integer orderItemId) {
 
-		// Get the logged-in customer
 		Customer customer = this.sessionService.getLoggedInCustomer();
 
-		// Map the orderItemDto to an OrderItem entity
-		OrderItem orderItem = this.modelMapper.map(orderItemDto, OrderItem.class);
+		OrderItem orderItem = orderItemRepository.findById(orderItemId)
+				.orElseThrow(() -> new OrderItemException("OrderItem not found with ID: " + orderItemId));
 
-		if (customer.getCart().contains(orderItem)) {
-			// Remove the order item from the cart if it's present
-			customer.getCart().remove(orderItem);
+		if (!customer.getCart().contains(orderItem)) {
+			throw new CustomerException("You are not authorized to delete this orderItem");
 		}
 
-		// Save the customer and delete the order item from the repository
-		customerRepository.save(customer);
-		orderItemRepository.delete(orderItem);
+		customer.getCart().remove(orderItem);
 
-		// Return the removed order item DTO
-		return orderItemDto;
+		customerRepository.save(customer);
+
+		return modelMapper.map(orderItem, OrderItemDto.class);
 	}
 
 	/**
@@ -144,7 +137,7 @@ public class CartServiceImpl implements CartService {
 
 	@Override
 	public CartDto getOrderItemsOfCart() {
-		List<OrderItem> cart = this.sessionService.getLoggedInCustomer().getCart();
+		Set<OrderItem> cart = this.sessionService.getLoggedInCustomer().getCart();
 		CartDto cartDto = new CartDto();
 		cartDto.setCartItems(cart.stream().map((item) -> this.modelMapper.map(item, OrderItemDto.class)).toList());
 		cartDto.setCartTotal(getCartTotal());

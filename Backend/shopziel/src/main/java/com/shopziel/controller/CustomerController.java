@@ -1,7 +1,5 @@
 package com.shopziel.controller;
 
-
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -89,6 +87,11 @@ public class CustomerController {
 	@PostMapping("/cart/add")
 	public ResponseEntity<OrderItemDto> addToCart(@RequestBody OrderItemDto orderItemDto) {
 		return new ResponseEntity<OrderItemDto>(cartService.addToCart(orderItemDto), HttpStatus.OK);
+	}
 
+	@DeleteMapping("/cart")
+	public ResponseEntity<OrderItemDto> deleteFromCart(@PathVariable Integer orderItemId){
+
+		return new ResponseEntity<OrderItemDto>(cartService.removeFromCart(orderItemId), HttpStatus.OK);
 	}
 }
