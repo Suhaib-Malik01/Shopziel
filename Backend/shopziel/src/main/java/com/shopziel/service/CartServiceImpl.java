@@ -52,11 +52,13 @@ public class CartServiceImpl implements CartService {
 		Customer customer = this.sessionService.getLoggedInCustomer();
 
 		// Map the orderItemDto to an OrderItem entity
-		OrderItem orderItem = this.modelMapper.map(orderItemDto, OrderItem.class);
+		OrderItem orderItem = new OrderItem();
+		orderItem.setQuantity(orderItemDto.getQuantity());
 
 		Product product = productRepository.findById(orderItemDto.getProductId())
 				.orElseThrow(() -> new ProductException("Product not found with ID: " + orderItemDto.getProductId()));
 
+		orderItem.setPrice(product.getPrice() * orderItemDto.getQuantity());
 		orderItem.setProduct(product);
 
 		orderItem.setStatus(OrderItemStatus.IN_CART);
