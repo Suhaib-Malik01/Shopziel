@@ -9,7 +9,7 @@ public interface CartService {
 
 	OrderItemDto addToCart(OrderItemDto orderItemDto);
 
-	OrderItemDto removeFromCart(OrderItemDto orderItemDto);
+	OrderItemDto removeFromCart(Integer orderItemId);
 
 	OrderDto proceedToPayment();
 
