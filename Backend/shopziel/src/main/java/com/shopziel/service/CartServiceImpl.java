@@ -155,15 +155,16 @@ public class CartServiceImpl implements CartService {
 		Set<OrderItem> cart = customer.getCart();
 
 		if (cart.contains(orderItem)) {
-			cart.remove(orderItem);
+
 			orderItem.setQuantity(quantity);
 			orderItem.setPrice(orderItem.getProduct().getPrice() * quantity);
-			cart.add(orderItem);
-			orderItemRepository.save(orderItem);
-			customerRepository.save(customer);
 
+			orderItemRepository.save(orderItem);
+			System.out.println(customer.getCart());
 			return modelMapper.map(orderItem, OrderItemDto.class);
-		} else
+
+		} else {
 			throw new OrderItemException("Order Item with Order Item Id : " + orderItemId + " dosent belong to you!!");
+		}
 	}
 }
