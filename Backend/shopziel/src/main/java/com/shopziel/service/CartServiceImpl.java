@@ -135,7 +135,7 @@ public class CartServiceImpl implements CartService {
 		for (OrderItem orderItem : customer.getCart()) {
 			// Calculate the total price by multiplying the price with quantity for each
 			// item
-			cartTotal += (orderItem.getPrice() * orderItem.getQuantity());
+			cartTotal += (orderItem.getPrice());
 		}
 
 		// Return the cart total
