@@ -16,4 +16,6 @@ public interface CartService {
 	Double getCartTotal();
 
 	CartDto getOrderItemsOfCart();
+
+	OrderItemDto updateQuantity(int orderItemId, int quantity);
 }

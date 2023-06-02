@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.shopziel.dto.CartDto;
@@ -26,6 +27,10 @@ import com.shopziel.service.CustomerService;
 import com.shopziel.service.CartService;
 
 import com.shopziel.service.ReviewService;
+
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/api/customers")
@@ -84,13 +89,20 @@ public class CustomerController {
 		return new ResponseEntity<CartDto>(cartService.getOrderItemsOfCart(), HttpStatus.OK);
 	}
 
+	@PutMapping("/cart/")
+	public ResponseEntity<OrderItemDto> updateOrderItem(
+			@RequestParam("quantity") @Min(value = 1, message = "Quantity must be at least 1") @Max(value = 7, message = "Quantity cannot exceed 7") @Valid int quantity,
+			@RequestParam("orderItemId") int orderItemId) {
+		return new ResponseEntity<OrderItemDto>(cartService.updateQuantity(orderItemId, quantity), HttpStatus.OK);
+	}
+
 	@PostMapping("/cart/add")
 	public ResponseEntity<OrderItemDto> addToCart(@RequestBody OrderItemDto orderItemDto) {
 		return new ResponseEntity<OrderItemDto>(cartService.addToCart(orderItemDto), HttpStatus.OK);
 	}
 
-	@DeleteMapping("/cart")
-	public ResponseEntity<OrderItemDto> deleteFromCart(@PathVariable Integer orderItemId){
+	@DeleteMapping("/cart/{orderItemId}")
+	public ResponseEntity<OrderItemDto> deleteFromCart(@PathVariable Integer orderItemId) {
 
 		return new ResponseEntity<OrderItemDto>(cartService.removeFromCart(orderItemId), HttpStatus.OK);
 	}

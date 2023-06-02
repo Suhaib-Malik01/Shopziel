@@ -144,4 +144,26 @@ public class CartServiceImpl implements CartService {
 		cartDto.setTotalProducts(cartDto.getCartItems().size());
 		return cartDto;
 	}
+
+	@Override
+	public OrderItemDto updateQuantity(int orderItemId, int quantity) {
+		Customer customer = this.sessionService.getLoggedInCustomer();
+
+		OrderItem orderItem = this.orderItemRepository.findById(orderItemId)
+				.orElseThrow(() -> new OrderItemException("Incorrect Order Id"));
+
+		Set<OrderItem> cart = customer.getCart();
+
+		if (cart.contains(orderItem)) {
+			cart.remove(orderItem);
+			orderItem.setQuantity(quantity);
+			orderItem.setPrice(orderItem.getProduct().getPrice() * quantity);
+			cart.add(orderItem);
+			orderItemRepository.save(orderItem);
+			customerRepository.save(customer);
+
+			return modelMapper.map(orderItem, OrderItemDto.class);
+		} else
+			throw new OrderItemException("Order Item with Order Item Id : " + orderItemId + " dosent belong to you!!");
+	}
 }
