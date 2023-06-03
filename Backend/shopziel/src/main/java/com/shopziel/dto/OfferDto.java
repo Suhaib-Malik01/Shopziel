@@ -16,16 +16,17 @@ import lombok.Setter;
 @Setter
 @Data
 public class OfferDto {
-	
+
 	private Integer offerId;
-	
+
 	private String offerName;
-	
+
 	private String offerDescription;
-	
+
 	private Date offerExpiresOn;
-	
+
 	private OfferStatus offerStatus;
-	
-	
+
+	private Integer discountValue;
+
 }

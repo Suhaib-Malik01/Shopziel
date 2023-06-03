@@ -1,5 +1,7 @@
 package com.shopziel.service;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -89,5 +91,9 @@ public class CustomerServiceImpl implements CustomerService {
 
 		return modelMapper.map(sessionService.getLoggedInCustomer(), CustomerDto.class);
 	}
+
+	
+
+	
 
 }
