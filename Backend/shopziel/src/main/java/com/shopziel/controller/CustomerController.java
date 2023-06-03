@@ -1,5 +1,7 @@
 package com.shopziel.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.CustomerDto;
+import com.shopziel.dto.OfferDto;
 import com.shopziel.dto.OrderItemDto;
 import com.shopziel.dto.ReviewDto;
 import com.shopziel.exception.CustomerException;
@@ -23,7 +26,7 @@ import com.shopziel.exception.ProductException;
 import com.shopziel.exception.ReviewException;
 
 import com.shopziel.service.CustomerService;
-
+import com.shopziel.service.OfferService;
 import com.shopziel.service.CartService;
 
 import com.shopziel.service.ReviewService;
@@ -46,6 +49,9 @@ public class CustomerController {
 
 	@Autowired
 	private CartService cartService;
+
+	@Autowired
+	private OfferService offerService;
 
 	/**
 	 * 
@@ -106,4 +112,11 @@ public class CustomerController {
 
 		return new ResponseEntity<OrderItemDto>(cartService.removeFromCart(orderItemId), HttpStatus.OK);
 	}
+
+	@GetMapping("/offers")
+	public ResponseEntity<List<OfferDto>> getAllOffers() {
+
+		return new ResponseEntity<List<OfferDto>>(offerService.getAllOffers(), HttpStatus.OK);
+	}
+
 }
