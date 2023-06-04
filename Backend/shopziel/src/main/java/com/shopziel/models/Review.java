@@ -37,7 +37,7 @@ public class Review {
     // @Column(name="review_image_url")
     // private List<String> reviewImagesUrls = new ArrayList<String>();
 
-    private String imgUrl;
+    private String imageUrl;
 
     private String review;
 
