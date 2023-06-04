@@ -15,6 +15,8 @@ public class ReviewDto {
 
 	private String review;
 
-    private Double rating;
+	private String imageUrl;
+
+	private Double rating;
 
 }
