@@ -1,6 +1,9 @@
 package com.shopziel.service;
 
+import java.util.List;
+
 import com.shopziel.dto.CustomerDto;
+import com.shopziel.dto.OfferDto;
 
 public interface CustomerService {
 

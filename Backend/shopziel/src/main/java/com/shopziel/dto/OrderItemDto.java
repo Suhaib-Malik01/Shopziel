@@ -4,6 +4,7 @@ import org.springframework.data.domain.jaxb.SpringDataJaxb.OrderDto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
+import com.shopziel.Enum.OrderItemStatus;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -29,6 +30,8 @@ public class OrderItemDto {
 	private ProductDto product;
 
 	private Integer quantity;
+
+	private OrderItemStatus status;
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Double price;

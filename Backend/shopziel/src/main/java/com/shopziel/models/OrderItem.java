@@ -1,6 +1,7 @@
 package com.shopziel.models;
 
 import java.sql.Date;
+import java.util.Objects;
 
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
@@ -27,7 +28,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@EqualsAndHashCode
 public class OrderItem {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -49,5 +49,22 @@ public class OrderItem {
 	private OrderItemStatus status;
 
 	private Date deliveryDate;
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) {
+			return true;
+		}
+		if (o == null || getClass() != o.getClass()) {
+			return false;
+		}
+		OrderItem orderItem = (OrderItem) o;
+		return Objects.equals(itemId, orderItem.itemId);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(itemId);
+	}
 
 }

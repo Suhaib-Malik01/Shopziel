@@ -30,11 +30,15 @@ public class Review {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer reviewId;
-    
-    @ElementCollection
-    @CollectionTable(name="review_images", joinColumns=@JoinColumn(name="reviewId"))
-    @Column(name="review_image_url")
-    private List<String> reviewImagesUrls = new ArrayList<String>();
+
+    // @ElementCollection
+    // @CollectionTable(name="review_images",
+    // joinColumns=@JoinColumn(name="reviewId"))
+    // @Column(name="review_image_url")
+    // private List<String> reviewImagesUrls = new ArrayList<String>();
+
+    private String imageUrl;
+
     private String review;
 
     @ManyToOne(fetch = FetchType.LAZY)

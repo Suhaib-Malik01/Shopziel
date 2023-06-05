@@ -2,6 +2,9 @@ package com.shopziel.service;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,9 @@ public class OfferServiceImpl implements OfferService {
 
 	@Autowired
 	private OfferRepository offerRepository;
+
+	@Autowired
+	private SessionService sessionService;
 
 	/**
 	 * Creates a welcome offer for the specified customer.
@@ -61,5 +67,13 @@ public class OfferServiceImpl implements OfferService {
 
 		// Convert the offer entity to DTO and return it
 		return modelMapper.map(welcomeOffer, OfferDto.class);
-	} 
+	}
+
+	@Override
+	public List<OfferDto> getAllOffers() {
+		Customer customer = sessionService.getLoggedInCustomer();
+
+		return customer.getOffers().stream().map(offers -> modelMapper.map(offers, OfferDto.class))
+				.collect(Collectors.toList());
+	}
 }
