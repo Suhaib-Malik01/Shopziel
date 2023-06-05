@@ -44,7 +44,7 @@ public class Order {
     @JoinColumn(name = "customer_id")
     private Customer customer;
 
-    @OneToMany(mappedBy="order", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy="order", cascade = CascadeType.MERGE)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     @OneToOne
@@ -56,4 +56,11 @@ public class Order {
     private Address deliveryAddress;
     
     private Double totalBillAmount;
+    
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private RzpOrder rzpOrder;
+    
+    @OneToOne
+    private RzpPayment rzpPayment;
+    
 }

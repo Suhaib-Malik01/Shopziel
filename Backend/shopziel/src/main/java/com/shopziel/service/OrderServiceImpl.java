@@ -97,7 +97,14 @@ public class OrderServiceImpl implements OrderService {
 	public OrderDto createOrder(OrderDto orderDto) {
 		// Get the logged-in customer
 		Customer customer = sessionService.getLoggedInCustomer();
-
+		List<Order> previousPendingOrders = orderRepository.findByCustomerAndStatus(customer,
+				OrderStatus.PAYMENT_PENDING);
+		for (Order pendingOrder : previousPendingOrders) {
+			pendingOrder.setStatus(OrderStatus.ORDER_CANCELED);
+			pendingOrder.setOrderItems(null);
+				// orderRepository.delete(pendingOrder);
+			orderRepository.delete(orderRepository.findById(pendingOrder.getOrderId()).get());
+		}
 		// Map the OrderDto to Order entity
 		Order order = modelMapper.map(orderDto, Order.class);
 		order.setOrderDate(Date.valueOf(LocalDate.now()));
@@ -134,7 +141,7 @@ public class OrderServiceImpl implements OrderService {
 		Customer customer = sessionService.getLoggedInCustomer();
 
 		// Find all orders associated with the customer
-		return orderRepository.findByCustomer(customer).stream()
-				.map((order) -> modelMapper.map(order, OrderDto.class)).collect(Collectors.toList());
+		return orderRepository.findByCustomer(customer).stream().map((order) -> modelMapper.map(order, OrderDto.class))
+				.collect(Collectors.toList());
 	}
 }

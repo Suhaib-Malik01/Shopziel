@@ -1,6 +1,9 @@
 package com.shopziel.controller;
 
 import com.shopziel.service.OrderService;
+
+import jakarta.validation.Valid;
+
 import com.shopziel.dto.OrderDto;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +91,7 @@ public class OrderController {
 	 *         created order.
 	 */
 	@PostMapping("/create")
-	public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
+	public ResponseEntity<OrderDto> createOrder(@RequestBody @Valid OrderDto orderDto) {
 
 		OrderDto createdOrder = orderService.createOrder(orderDto);
 

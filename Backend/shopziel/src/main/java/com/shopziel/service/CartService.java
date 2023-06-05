@@ -1,9 +1,11 @@
 package com.shopziel.service;
 
 
+import com.razorpay.RazorpayException;
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
+import com.shopziel.dto.RzpOrderDto;
 
 public interface CartService {
 
@@ -11,7 +13,7 @@ public interface CartService {
 
 	OrderItemDto removeFromCart(Integer orderItemId);
 
-	OrderDto proceedToPayment();
+	OrderDto proceedToPayment() throws RazorpayException;
 
 	Double getCartTotal();
 
