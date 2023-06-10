@@ -56,4 +56,10 @@ public class Order {
     private Address deliveryAddress;
     
     private Double totalBillAmount;
+    
+    @OneToOne(cascade = CascadeType.REMOVE)
+    private RzpOrder rzpOrder;
+    
+    @OneToOne
+    private Payment payment;
 }
