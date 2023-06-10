@@ -3,6 +3,7 @@ package com.shopziel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.razorpay.Order;
 import com.razorpay.RazorpayException;
+import com.shopziel.dto.OrderDto;
 import com.shopziel.models.RazorpayCallbackData;
 import com.shopziel.service.RazorpayService;
 
@@ -25,19 +27,12 @@ public class PaymentController {
         this.razorpayService = razorpayService;
     }
 
-    @PostMapping("/payments")
-    public ResponseEntity<String> createPayment() {
-        // Perform necessary logic to create a payment
-
-        // Call the RazorpayService to create an order
-        try {
-            Order order = razorpayService.createOrder(1000.0, "INR", "order_123");
-            // Process the order and return the response
-            return ResponseEntity.ok("Payment created successfully. Order ID: " + order.get("id"));
-        } catch (RazorpayException e) {
-            // Handle exception
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error creating payment");
-        }
+    @PostMapping("/payments/{orderId}")
+    public ResponseEntity<OrderDto> createPayment(@PathVariable Integer orderId) throws RazorpayException {
+           
+    	// Process the order and return the response
+          return ResponseEntity.ok(razorpayService.createRzpOrder(orderId));
+       
     }
 
     @PostMapping("/razorpay/callback")

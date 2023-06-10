@@ -20,7 +20,7 @@ public class Payment {
 	private Long id;
 
 	@Column(name = "order_id")
-	private String orderId;
+	private String razorpay_orderId;
 
 	@Column(name = "amount")
 	private Double amount;
