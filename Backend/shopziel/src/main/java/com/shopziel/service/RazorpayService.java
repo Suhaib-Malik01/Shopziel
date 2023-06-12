@@ -6,10 +6,12 @@ import com.razorpay.RazorpayException;
 import com.shopziel.repository.OrderRepository;
 import com.shopziel.repository.PaymentRepository;
 import com.shopziel.repository.RzpOrderRepository;
+import com.shopziel.Enum.OrderStatus;
 import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.models.Customer;
 import com.shopziel.models.Payment;
+import com.shopziel.models.RazorpayCallbackData;
 import com.shopziel.models.RzpOrder;
 import com.shopziel.exception.OrderException;
 
@@ -95,17 +97,26 @@ public class RazorpayService {
 			return modelMapper.map(orderRepository.save(order), OrderDto.class);
     }
 
-    public void handlePaymentSuccess(String orderId, double amount, String currency) {
+    public OrderDto handlePaymentSuccess(RazorpayCallbackData callbackData, Integer orderId) {
     	
-    	Customer customer = sessionService.getLoggedInCustomer();
     	
         // Create a new Payment object
         Payment payment = new Payment();
-        payment.setRazorpay_orderId(orderId);
-        payment.setAmount(amount);
-        payment.setCurrency(currency);
+        payment.setRazorpay_orderId(callbackData.getRazorpay_order_id());
+        payment.setRazorpay_payment_id(callbackData.getRazorpay_payment_id());
+        payment.setRazorpay_signature(callbackData.getRazorpay_signature());
 
-        // Save the Payment object to the database
-        paymentRepository.save(payment);
+        
+        com.shopziel.models.Order order = orderRepository.findById(orderId).orElseThrow(() -> new OrderException("Order not found with order Id : " + orderId));
+
+        order.setPayment(paymentRepository.save(payment));
+        order.setStatus(OrderStatus.ORDER_CONFIRMED);
+        
+        // Save the order success to the database
+        
+       return  modelMapper.map(orderRepository.save(order), OrderDto.class);
+    
     }
+
+	
 }
