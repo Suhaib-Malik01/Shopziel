@@ -17,18 +17,11 @@ import lombok.NoArgsConstructor;
 public class Payment {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Long paymentId;
 
-	@Column(name = "order_id")
 	private String razorpay_orderId;
-
-	@Column(name = "amount")
-	private Double amount;
-
-	@Column(name = "currency")
-	private String currency;	
+	private String razorpay_payment_id;
+    private String razorpay_signature;
 	
-	private Integer customerId;
-	private Integer oderId; 
 	
 }

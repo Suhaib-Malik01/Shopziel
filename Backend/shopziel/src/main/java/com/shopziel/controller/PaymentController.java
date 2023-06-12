@@ -17,7 +17,7 @@ import com.shopziel.models.RazorpayCallbackData;
 import com.shopziel.service.RazorpayService;
 
 @RestController
-@RequestMapping("/shopziel")
+@RequestMapping("/payments")
 public class PaymentController {
 
     private RazorpayService razorpayService;
@@ -27,7 +27,7 @@ public class PaymentController {
         this.razorpayService = razorpayService;
     }
 
-    @PostMapping("/payments/{orderId}")
+    @PostMapping("/razorpay/{orderId}")
     public ResponseEntity<OrderDto> createPayment(@PathVariable Integer orderId) throws RazorpayException {
            
     	// Process the order and return the response
@@ -35,18 +35,11 @@ public class PaymentController {
        
     }
 
-    @PostMapping("/razorpay/callback")
-    public ResponseEntity<String> handleRazorpayCallback(@RequestBody RazorpayCallbackData callbackData) {
-        // Process the Razorpay callback and extract the relevant data
-        String orderId = callbackData.getOrderId();
-        double amount = callbackData.getAmount();
-        String currency = callbackData.getCurrency();
-
-        // Pass the relevant data to the RazorpayService
-        razorpayService.handlePaymentSuccess(orderId, amount, currency);
-
-        // Return the response
-        return ResponseEntity.ok("Payment success handled");
+    @PostMapping("/razorpay/callback/{orderId}")
+    public ResponseEntity<OrderDto> handleRazorpayCallback(@RequestBody RazorpayCallbackData callbackData, @PathVariable Integer orderId) {
+         // Pass the relevant data to the RazorpayService
+         // Return the successfull order 
+        return ResponseEntity.ok(razorpayService.handlePaymentSuccess(callbackData,orderId));
     }
     
 }
