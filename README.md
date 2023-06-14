@@ -2,6 +2,10 @@
 
 This is an e-commerce project that provides various API endpoints for managing customers, orders, sellers and products.
 
+## Frontend
+
+React - https://github.com/Suhaib-Malik01/Shopziel-Frontend
+
 ## Technologies Used
 
 - Java
