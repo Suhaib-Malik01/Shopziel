@@ -11,7 +11,6 @@ import com.shopziel.models.Address;
 import com.shopziel.models.Payment;
 import com.shopziel.models.RzpOrder;
 
-import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Data
