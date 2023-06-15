@@ -3,46 +3,47 @@ package com.shopziel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
 import com.razorpay.Order;
-import com.razorpay.Payment;
 import com.razorpay.RazorpayException;
 import com.shopziel.dto.OrderDto;
-import com.shopziel.dto.RzpOrderDto;
-import com.shopziel.service.CartService;
+import com.shopziel.models.RazorpayCallbackData;
+
 import com.shopziel.service.RazorpayService;
 
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
 
-	@Autowired
-	private RazorpayService razorpayService;
 
-	@Autowired
-	private CartService cartService;
+    private RazorpayService razorpayService;
 
-	@PostMapping("/create-order/")
-	public ResponseEntity<OrderDto> createOrder(@RequestParam("orderId") Integer orderId) throws RazorpayException {
+    @Autowired
+    public PaymentController(RazorpayService razorpayService) {
+        this.razorpayService = razorpayService;
+    }
 
-		return ResponseEntity.ok(razorpayService.createOrder(orderId));
-	}
+    @PostMapping("/razorpay/{orderId}")
+    public ResponseEntity<OrderDto> createPayment(@PathVariable Integer orderId) throws RazorpayException {
+           
+    	// Process the order and return the response
+          return ResponseEntity.ok(razorpayService.createRzpOrder(orderId));
+       
+    }
 
-	@PostMapping("/capture-payment")
-	public ResponseEntity<Payment> capturePayment(@RequestParam String paymentId, @RequestParam int amount)
-			throws RazorpayException {
-		Payment payment = razorpayService.capturePayment(paymentId, amount);
-		return ResponseEntity.ok(payment);
-	}
-
-	@GetMapping("/proceedToPayment")
-	public ResponseEntity<OrderDto> proceedToPayment() throws RazorpayException {
-		return new ResponseEntity<OrderDto>(cartService.proceedToPayment(), HttpStatus.OK);
-	}
+    @PostMapping("/razorpay/callback/{orderId}")
+    public ResponseEntity<OrderDto> handleRazorpayCallback(@RequestBody RazorpayCallbackData callbackData, @PathVariable Integer orderId) {
+         // Pass the relevant data to the RazorpayService
+         // Return the successfull order 
+        return ResponseEntity.ok(razorpayService.handlePaymentSuccess(callbackData,orderId));
+    }
+    
 
 }

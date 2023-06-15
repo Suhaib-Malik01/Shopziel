@@ -8,10 +8,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.shopziel.Enum.OrderStatus;
 import com.shopziel.models.Address;
-import com.shopziel.models.RzpOrder;
-import com.shopziel.models.RzpPayment;
 
-import jakarta.persistence.OneToOne;
+import com.shopziel.models.Payment;
+import com.shopziel.models.RzpOrder;
+
 import lombok.Data;
 
 @Data
@@ -40,9 +40,11 @@ public class OrderDto {
 	@JsonProperty(access = Access.READ_ONLY)
 	private Double totalBillAmount;
 
+	
 	@JsonProperty(access = Access.READ_ONLY)
 	private RzpOrder rzpOrder;
 
-	private RzpPayment rzpPayment;
+	@JsonProperty(access = Access.READ_ONLY)
+	private Payment payment;
 
 }

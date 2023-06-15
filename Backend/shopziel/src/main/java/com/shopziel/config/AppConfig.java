@@ -29,7 +29,7 @@ public class AppConfig {
                 .authorizeHttpRequests()
                 .requestMatchers(HttpMethod.POST, "/api/users/").permitAll()
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
-                .requestMatchers("/api/products/*", "/api/products/search/**", "/api/category/*").permitAll()                                                                             // requests
+                .requestMatchers("/api/products/*", "/api/products/search/**", "/api/category/**").permitAll()                                                                             // requests
                 .anyRequest().authenticated().and()
                 .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)

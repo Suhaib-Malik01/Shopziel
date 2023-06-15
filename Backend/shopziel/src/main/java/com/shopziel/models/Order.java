@@ -61,6 +61,6 @@ public class Order {
     private RzpOrder rzpOrder;
     
     @OneToOne
-    private RzpPayment rzpPayment;
-    
+    private Payment payment;
+
 }
