@@ -120,7 +120,7 @@ public class CartServiceImpl implements CartService {
 	public OrderDto proceedToPayment() throws RazorpayException {
 		OrderDto order = orderService.createOrder(new OrderDto());
 
-		return razorpayService.createOrder(order.getOrderId());
+		return razorpayService.createRzpOrder(order.getOrderId());
 	}
 
 	/**
