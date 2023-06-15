@@ -27,9 +27,8 @@ import lombok.Setter;
 @Setter
 public class Customer extends AppUser {
 
-	@ManyToMany
-	@JoinTable(name = "join_table_name", joinColumns = @JoinColumn(name = "entity_id"), inverseJoinColumns = @JoinColumn(name = "address_id"))
-	private List<Address> addresses;
+	@OneToMany(cascade = CascadeType.ALL)
+	private List<Address> addresses = new ArrayList<>();
 
 	@ElementCollection
 	private List<Product> wishlist = new ArrayList<>();

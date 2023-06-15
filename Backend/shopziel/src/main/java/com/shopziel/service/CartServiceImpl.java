@@ -7,14 +7,17 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.razorpay.RazorpayException;
 import com.shopziel.Enum.OrderItemStatus;
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.dto.OrderItemDto;
+import com.shopziel.dto.RzpOrderDto;
 import com.shopziel.exception.CustomerException;
 import com.shopziel.exception.OrderItemException;
 import com.shopziel.exception.ProductException;
 import com.shopziel.models.Customer;
+import com.shopziel.models.Order;
 import com.shopziel.models.OrderItem;
 import com.shopziel.models.Product;
 import com.shopziel.repository.CustomerRepository;
@@ -29,6 +32,12 @@ public class CartServiceImpl implements CartService {
 
 	@Autowired
 	private SessionService sessionService;
+
+	@Autowired
+	private OrderService orderService;
+
+	@Autowired
+	private RazorpayService razorpayService;
 
 	@Autowired
 	private ModelMapper modelMapper;
@@ -95,7 +104,7 @@ public class CartServiceImpl implements CartService {
 		}
 
 		customer.getCart().remove(orderItem);
-
+		orderItemRepository.delete(orderItem);
 		customerRepository.save(customer);
 
 		return modelMapper.map(orderItem, OrderItemDto.class);
@@ -105,11 +114,13 @@ public class CartServiceImpl implements CartService {
 	 * Proceeds to the payment process.
 	 *
 	 * @return The DTO object representing the order for payment.
+	 * @throws RazorpayException
 	 */
 	@Override
-	public OrderDto proceedToPayment() {
-		// TODO: Implement the payment process
-		return null;
+	public OrderDto proceedToPayment() throws RazorpayException {
+		OrderDto order = orderService.createOrder(new OrderDto());
+
+		return razorpayService.createOrder(order.getOrderId());
 	}
 
 	/**

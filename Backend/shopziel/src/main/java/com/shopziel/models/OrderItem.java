@@ -3,6 +3,9 @@ package com.shopziel.models;
 import java.sql.Date;
 import java.util.Objects;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
 import com.shopziel.Enum.OrderItemStatus;
 
 import jakarta.persistence.Entity;
@@ -31,7 +34,7 @@ public class OrderItem {
 	private Integer itemId;
 
 	@ManyToOne
-	@JoinColumn(name = "order_id")
+	@JoinColumn(name = "order_id", nullable = true)
 	private Order order;
 
 	@ManyToOne

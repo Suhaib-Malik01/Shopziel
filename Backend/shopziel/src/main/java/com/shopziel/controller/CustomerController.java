@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.shopziel.dto.AddressDto;
 import com.shopziel.dto.CartDto;
 import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.OfferDto;
@@ -117,6 +118,17 @@ public class CustomerController {
 	public ResponseEntity<List<OfferDto>> getAllOffers() {
 
 		return new ResponseEntity<List<OfferDto>>(offerService.getAllOffers(), HttpStatus.OK);
+	}
+
+	@PostMapping("/address")
+	public ResponseEntity<CustomerDto> addAddress(@RequestBody AddressDto addressDto) {
+		return new ResponseEntity<CustomerDto>(this.customerService.addAddress(addressDto), HttpStatus.OK);
+	}
+
+	@GetMapping("/address")
+	public ResponseEntity<List<AddressDto>> getAllAddressesOfCustomer() {
+		return new ResponseEntity<List<AddressDto>>(this.customerService.getAddress(), HttpStatus.OK);
+
 	}
 
 }

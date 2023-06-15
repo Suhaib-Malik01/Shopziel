@@ -1,5 +1,7 @@
 package com.shopziel.dto;
 
+import com.shopziel.models.Customer;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,5 +20,7 @@ public class ReviewDto {
 	private String imageUrl;
 
 	private Double rating;
+
+	private CustomerDto customer;
 
 }

@@ -3,6 +3,7 @@ package com.shopziel.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -14,11 +15,13 @@ import com.razorpay.Order;
 import com.razorpay.RazorpayException;
 import com.shopziel.dto.OrderDto;
 import com.shopziel.models.RazorpayCallbackData;
+
 import com.shopziel.service.RazorpayService;
 
 @RestController
 @RequestMapping("/payments")
 public class PaymentController {
+
 
     private RazorpayService razorpayService;
 
@@ -42,4 +45,5 @@ public class PaymentController {
         return ResponseEntity.ok(razorpayService.handlePaymentSuccess(callbackData,orderId));
     }
     
+
 }

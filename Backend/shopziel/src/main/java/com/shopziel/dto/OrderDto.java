@@ -8,6 +8,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
 import com.shopziel.Enum.OrderStatus;
 import com.shopziel.models.Address;
+
 import com.shopziel.models.Payment;
 import com.shopziel.models.RzpOrder;
 
@@ -15,8 +16,9 @@ import lombok.Data;
 
 @Data
 public class OrderDto {
+
 	private Integer orderId;
-	
+
 	@JsonProperty(access = Access.READ_ONLY)
 	private Date orderDate;
 
@@ -29,16 +31,20 @@ public class OrderDto {
 	@JsonProperty(access = Access.READ_ONLY)
 	private List<OrderItemDto> orderItems = new ArrayList<>();
 
+	@JsonProperty(access = Access.READ_WRITE)
 	private Address billingAddress;
 
+	@JsonProperty(access = Access.READ_WRITE)
 	private Address deliveryAddress;
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Double totalBillAmount;
+
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	private RzpOrder rzpOrder;
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Payment payment;
+
 }
