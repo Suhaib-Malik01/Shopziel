@@ -1,15 +1,19 @@
 package com.shopziel.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import com.shopziel.Enum.AddressType;
+import com.shopziel.dto.AddressDto;
 import com.shopziel.dto.CustomerDto;
 import com.shopziel.dto.OfferDto;
 import com.shopziel.dto.UserDto;
+import com.shopziel.models.Address;
 import com.shopziel.models.AppUser;
 import com.shopziel.models.Customer;
 import com.shopziel.repository.AppUserRepository;
@@ -92,8 +96,21 @@ public class CustomerServiceImpl implements CustomerService {
 		return modelMapper.map(sessionService.getLoggedInCustomer(), CustomerDto.class);
 	}
 
-	
+	@Override
+	public CustomerDto addAddress(AddressDto addressDto) {
+		Customer customer = sessionService.getLoggedInCustomer();
 
-	
+		customer.getAddresses().add(modelMapper.map(addressDto, Address.class));
+
+		return this.modelMapper.map(customerRepository.save(customer), CustomerDto.class);
+	}
+
+	@Override
+	public List<AddressDto> getAddress() {
+		Customer customer = sessionService.getLoggedInCustomer();
+
+		return customer.getAddresses().stream().map((address) -> modelMapper.map(address, AddressDto.class))
+				.collect(Collectors.toList());
+	}
 
 }
