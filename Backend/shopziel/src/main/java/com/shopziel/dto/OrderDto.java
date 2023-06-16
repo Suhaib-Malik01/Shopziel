@@ -39,10 +39,12 @@ public class OrderDto {
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Double totalBillAmount;
+
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	private RzpOrder rzpOrder;
 
 	@JsonProperty(access = Access.READ_ONLY)
 	private Payment payment;
+
 }

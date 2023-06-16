@@ -11,5 +11,5 @@ import com.shopziel.models.Customer;
 
 public interface AddressRepository extends JpaRepository<Address, Integer> {
 
-	Optional<Address> findByCustomerAndAddressType(Customer customer, AddressType addressType);
+	// Optional<Address> findByCustomerAndAddressType(Customer customer, AddressType addressType);
 }

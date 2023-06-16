@@ -13,6 +13,7 @@ public class RzpOrder {
 	private String id;
 	private Integer amount;
 	private Integer amountPaid;
+
 	private Integer amountDue;
 	private String currency;
 	private String receipt;
@@ -20,3 +21,4 @@ public class RzpOrder {
 	private Date createdAt;
 
 }
+

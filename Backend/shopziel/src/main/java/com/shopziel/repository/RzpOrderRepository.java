@@ -9,4 +9,5 @@ import com.shopziel.models.RzpOrder;
 @Repository
 public interface RzpOrderRepository extends JpaRepository<RzpOrder, Integer> {
 
+
 }
