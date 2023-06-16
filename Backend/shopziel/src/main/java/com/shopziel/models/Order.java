@@ -59,7 +59,7 @@ public class Order {
     
     @OneToOne(cascade = CascadeType.REMOVE)
     private RzpOrder rzpOrder;
-    
+
     @OneToOne
     private Payment payment;
 

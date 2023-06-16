@@ -10,12 +10,10 @@ public class RzpOrderDto {
 	private String id;
 	private Integer amount;
 	private Integer amountPaid;
-	private Date createdAt;
 	private Integer amountDue;
 	private String currency;
 	private String receipt;
-	private String entity;
 	private String status;
-	private Integer attempts;
+	private Date createdAt;
 
 }

@@ -10,7 +10,7 @@ import com.shopziel.repository.RzpOrderRepository;
 import com.shopziel.Enum.OrderStatus;
 
 import com.shopziel.dto.OrderDto;
-
+import com.shopziel.dto.RzpOrderDto;
 import com.shopziel.models.Payment;
 import com.shopziel.models.RazorpayCallbackData;
 import com.shopziel.models.RzpOrder;
@@ -20,108 +20,88 @@ import com.shopziel.exception.OrderException;
 import org.json.JSONObject;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
 public class RazorpayService {
 
-    private final String apiKey;
-    private final String apiSecret;
+	@Autowired
+	private PaymentRepository paymentRepository;
 
-    private final RazorpayClient razorpayClient;
-    private final PaymentRepository paymentRepository;
+	@Autowired
+	private SessionService sessionService;
 
-    @Autowired
-    private SessionService sessionService;
+	@Autowired
+	private OrderRepository orderRepository;
 
-    @Autowired
-    private OrderRepository orderRepository;
+	@Autowired
+	private RzpOrderRepository rzpOrderRepository;
 
-    @Autowired
-    private RzpOrderRepository rzpOrderRepository;
+	@Autowired
+	private ModelMapper modelMapper;
 
-    @Autowired
-    private ModelMapper modelMapper;
+	@Autowired
+	private RazorpayClient razorpayClient;
 
-    @Autowired
-    public RazorpayService(
-            @Value("${razorpay.keyId}") String apiKey,
-            @Value("${razorpay.keySecret}") String apiSecret,
-            PaymentRepository paymentRepository) {
-        this.apiKey = apiKey;
-        this.apiSecret = apiSecret;
-        this.paymentRepository = paymentRepository;
-        this.razorpayClient = initializeRazorpayClient();
-    }
+	// Implement methods for interacting with the Razorpay API
 
-    private RazorpayClient initializeRazorpayClient() {
-        try {
-            return new RazorpayClient(apiKey, apiSecret);
-        } catch (RazorpayException e) {
-            throw new RuntimeException("Failed to initialize RazorpayClient", e);
-        }
-    }
+	public OrderDto createRzpOrder(Integer orderId) throws RazorpayException {
 
-    // Implement methods for interacting with the Razorpay API
+		com.shopziel.models.Order order = orderRepository.findById(orderId)
+				.orElseThrow(() -> new OrderException("Order not found with order Id : " + orderId));
 
-    public OrderDto createRzpOrder(Integer orderId) throws RazorpayException {
+		if (order.getCustomer().getId() != sessionService.getLoggedInCustomer().getId())
+			throw new CustomerException("You are not authorized to create order with ID: " + orderId);
 
-        com.shopziel.models.Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException("Order not found with order Id : " + orderId));
+		JSONObject orderRequest = new JSONObject();
 
-        if (order.getCustomer().getId() != sessionService.getLoggedInCustomer().getId())
-            throw new CustomerException("You are not authorized to create order with ID: " + orderId);
+		orderRequest.put("amount", order.getTotalBillAmount() * 100); // amount in the smallest currency unit
+		orderRequest.put("currency", "INR");
+		orderRequest.put("receipt", "Order_Id_" + orderId + "_of_Customer_Id_" + order.getCustomer().getId());
 
-        JSONObject orderRequest = new JSONObject();
+		Order rzpOrder = razorpayClient.orders.create(orderRequest);
+		System.out.println(rzpOrder);
 
-        orderRequest.put("amount", order.getTotalBillAmount() * 100); // amount in the smallest currency unit
-        orderRequest.put("currency", "INR");
-        orderRequest.put("receipt", "Order_Id_" + orderId + "_of_Customer_Id_" + order.getCustomer().getId());
+		RzpOrderDto rzpOrderDto = new RzpOrderDto();
 
-        Order rzpOrder = razorpayClient.orders.create(orderRequest);
-        System.out.println(rzpOrder);
+		rzpOrderDto.setId(rzpOrder.get("id"));
+		rzpOrderDto.setAmount(rzpOrder.get("amount"));
+		rzpOrderDto.setAmountPaid(rzpOrder.get("amount_paid"));
+		rzpOrderDto.setCreatedAt(rzpOrder.get("created_at"));
+		rzpOrderDto.setAmountDue(rzpOrder.get("amount_due"));
+		rzpOrderDto.setCurrency(rzpOrder.get("currency"));
+		rzpOrderDto.setReceipt(rzpOrder.get("receipt"));
+		rzpOrderDto.setStatus(rzpOrder.get("status"));
 
-        RzpOrderDto rzpOrderDto = new RzpOrderDto();
+		System.out.println(rzpOrderDto);
 
-        rzpOrderDto.setId(rzpOrder.get("id"));
-        rzpOrderDto.setAmount(rzpOrder.get("amount"));
-        rzpOrderDto.setAmountPaid(rzpOrder.get("amount_paid"));
-        rzpOrderDto.setCreatedAt(rzpOrder.get("created_at"));
-        rzpOrderDto.setAmountDue(rzpOrder.get("amount_due"));
-        rzpOrderDto.setCurrency(rzpOrder.get("currency"));
-        rzpOrderDto.setReceipt(rzpOrder.get("receipt"));
-        rzpOrderDto.setStatus(rzpOrder.get("status"));
+		order.setRzpOrder(rzpOrderRepository.save(modelMapper.map(rzpOrderDto, RzpOrder.class)));
 
-        System.out.println(rzpOrderDto);
+		return modelMapper.map(orderRepository.save(order), OrderDto.class);
+	}
 
-        order.setRzpOrder(rzpOrderRepository.save(modelMapper.map(rzpOrderDto, RzpOrder.class)));
+	public OrderDto handlePaymentSuccess(RazorpayCallbackData callbackData, Integer orderId) {
 
-        return modelMapper.map(orderRepository.save(order), OrderDto.class);
-    }
+		// Create a new Payment object
+		Payment payment = new Payment();
+		payment.setRazorpay_orderId(callbackData.getRazorpay_order_id());
+		payment.setRazorpay_payment_id(callbackData.getRazorpay_payment_id());
+		payment.setRazorpay_signature(callbackData.getRazorpay_signature());
 
-    public OrderDto handlePaymentSuccess(RazorpayCallbackData callbackData, Integer orderId) {
+		com.shopziel.models.Order order = orderRepository.findById(orderId)
+				.orElseThrow(() -> new OrderException("Order not found with order Id : " + orderId));
 
-        // Create a new Payment object
-        Payment payment = new Payment();
-        payment.setRazorpay_orderId(callbackData.getRazorpay_order_id());
-        payment.setRazorpay_payment_id(callbackData.getRazorpay_payment_id());
-        payment.setRazorpay_signature(callbackData.getRazorpay_signature());
+		if (order.getCustomer().getId() != sessionService.getLoggedInCustomer().getId())
+			throw new CustomerException("You are not authorized to create order with ID: " + orderId);
 
-        com.shopziel.models.Order order = orderRepository.findById(orderId)
-                .orElseThrow(() -> new OrderException("Order not found with order Id : " + orderId));
+		order.setPayment(paymentRepository.save(payment));
+		order.setStatus(OrderStatus.ORDER_CONFIRMED);
 
-        if (order.getCustomer().getId() != sessionService.getLoggedInCustomer().getId())
-            throw new CustomerException("You are not authorized to create order with ID: " + orderId);
+		// Save the order success to the database
 
-        order.setPayment(paymentRepository.save(payment));
-        order.setStatus(OrderStatus.ORDER_CONFIRMED);
+		return modelMapper.map(orderRepository.save(order), OrderDto.class);
 
-        // Save the order success to the database
-        
-        
+	}
 
-        return modelMapper.map(orderRepository.save(order), OrderDto.class);
 
-    }
 }
