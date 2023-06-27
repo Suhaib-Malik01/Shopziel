@@ -16,7 +16,7 @@ import com.shopziel.service.AppUserService;
 
 @RestController
 @RequestMapping("/api/users")
-@CrossOrigin(origins = "*")
+ @CrossOrigin (origins = "*" , exposedHeaders = "**")
 public class AppUserController {
 
 	@Autowired

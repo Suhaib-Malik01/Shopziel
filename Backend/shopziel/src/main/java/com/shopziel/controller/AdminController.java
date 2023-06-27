@@ -18,7 +18,7 @@ import com.shopziel.service.CategoryService;
 
 @RestController
 @RequestMapping("/api/admin/category")
-@CrossOrigin(origins = "*")
+ @CrossOrigin (origins = "*" , exposedHeaders = "**")
 public class AdminController {
 
     @Autowired
