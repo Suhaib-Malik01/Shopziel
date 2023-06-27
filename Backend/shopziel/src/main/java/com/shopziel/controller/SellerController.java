@@ -20,7 +20,7 @@ import com.shopziel.service.ProductService;
 
 @RestController
 @RequestMapping("/api/sellers")
-@CrossOrigin(origins = "*")
+@CrossOrigin (origins = "*" , exposedHeaders = "**")
 public class SellerController {
 
     @Autowired

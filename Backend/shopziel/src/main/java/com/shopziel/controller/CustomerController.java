@@ -38,7 +38,7 @@ import jakarta.validation.constraints.Min;
 
 @RestController
 @RequestMapping("/api/customers")
-@CrossOrigin(origins = "*")
+ @CrossOrigin (origins = "*" , exposedHeaders = "**")
 
 public class CustomerController {
 

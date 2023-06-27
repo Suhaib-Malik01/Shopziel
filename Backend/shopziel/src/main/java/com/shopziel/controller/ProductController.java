@@ -17,7 +17,7 @@ import com.shopziel.service.ProductService;
 
 @RestController
 @RequestMapping("/api/products")
-@CrossOrigin(origins = "*")
+ @CrossOrigin (origins = "*" , exposedHeaders = "**")
 public class ProductController {
 
     @Autowired
