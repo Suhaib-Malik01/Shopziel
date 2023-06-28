@@ -37,7 +37,7 @@ public class AppConfig {
                 .requestMatchers(AUTH_WHITE_LIST).permitAll()
                 .requestMatchers("/api/products/*", "/api/products/search/**", "/api/category/**").permitAll()                                                                             // requests
                 .anyRequest().authenticated().and()
-                .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
+                // .addFilterBefore(new CorsFilter(), ChannelProcessingFilter.class)
                 .addFilterAfter(new JwtTokenGeneratorFilter(), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JwtTokenValidatorFilter(), BasicAuthenticationFilter.class)
                 .formLogin()
@@ -61,7 +61,8 @@ public class AppConfig {
         configuration.setAllowedOrigins(Arrays.asList("*"));
         configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(Arrays.asList("authorization", "content-type", "x-auth-token"));
-        configuration.setExposedHeaders(Arrays.asList("x-auth-token"));
+        configuration.setExposedHeaders(Arrays.asList("authorization"));
+
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", configuration);
         return source;
